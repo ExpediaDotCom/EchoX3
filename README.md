@@ -233,3 +233,12 @@ This method is called after every operation which can modify the object (doMaint
 For SmartCache, there are two ways of implementing this method
 * Walk the list until a non-null is found (return false) or the end of list is found (return true)
 * Keep a count of non-null elements and return count == 0
+
+##Client wrapper implements ISimpleCacheClient
+The client wrapper acts as a simplification agent between the clients of the EchoX3 application and the EchoX3 system. To its clients, the wrapper exposes a simple interface in clients “units”. For example, the SmartCache exposes a plain cache interface. The implementation details are hidden from the clients. The wrapper takes in requests and translates them into Trellis calls, either to the SimpleCache or to the ObjectCache, as is appropriate. In a more advanced scenario, a wrapper’s single entry point could require multiple calls to perform its task before returning to the caller.
+ 
+![Figure 9](https://cloud.githubusercontent.com/assets/7895210/8338057/4c06ccfe-1a63-11e5-8ecc-8ed4cd153b45.jpg)
+Figure 9 Client wrapper interfaces
+
+For SmartCache, the obvious and simplest approach is to expose the same API as is used for the Trellis SimpleCache: ISimpleCacheClient:
+	class SmartCacheClient implements ITrellisSimpleCacheClient
