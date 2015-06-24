@@ -24,13 +24,10 @@ Guiding principles are guidelines to be used when making decision; they are tie 
 ##What does **EchoX3** do?
 **EchoX3** is a distributed object cache. The cache contains real objects (not byte[]). As the client makes calls to write new data to the object, it updates itself. During a read call, the object may return stored values or perform calculations and return the results of the calculations. The key is that a true object resides in the cache that can perform operations in-place.
 When the client performs a call (see Figure 1), the **EchoX3** system uses the cache name and the key to find the object. The client’s request is then passed to the object (Figure 2).
-
 ![Figure 1 - System overview: Routing](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
 ####Figure 1 - System overview: Routing
-
 ![Figure 2 - System overview: Client request to cache object](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
-####[Figure 2 - System overview: Client request to cache object
-
+####Figure 2 - System overview: Client request to cache object
 To simplify the development effort, a number of logistics tasks are handled automatically by the **EchoX3** system:
 
 * Connection management
@@ -152,8 +149,8 @@ And the read request takes a readRequest to return a readResponse.
 ##Writing a EchoX3 application
 
 The figure below illustrates the various components of a typical trellis application. In this section, we will build a complete EchoX3 application named SmartCache (included in the EchoX3 distribution).
-
-####[Figure 3 "Trellis application components" goes here]
+![Figure 3 - Trellis application components](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
+####Figure 3 - Trellis application components
 
 ##SmartCache design
 There is a cost to each item placed in a (simple or object) cache. Sometimes, the right conditions are present where this cost can be minimized. SmartCache is a simple cache that minimizes this cost when the following conditions are present:
@@ -161,21 +158,8 @@ There is a cost to each item placed in a (simple or object) cache. Sometimes, th
 * The keys are composed in such a way that several items have the same key up to the last byte (You should use byte[] as keys. The API supports Serializable; however, byte[] are not compressed and essentially kept intact, as is required for this scheme.)
 
 For example, the set of 4 bytes keys illustrated in Figure 4 matches condition 2.
-
-      Entry # Group   Byte 0  Byte 1  Byte 2  Byte 3
-		1		1		1		2		3		1
-		2		1		1		2		3		2
-		3		1		1		2		3		3
-		4		2		2		3		4		1
-		5		2		2		3		4		2
-		6		2		2		3		4		3
-		7		2		2		3		4		4
-		8		3		5		6		7		1
-		9		3		5		6		7		2
-		10		3		5		6		7		3
-		11		3		5		6		7		4
-
-####[Figure 4 "Keys matching condition for SmartCache" goes here]
+![Figure 4 - Keys matching condition for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338049/4bf26200-1a63-11e5-819f-7ca54a884073.jpg)
+####Figure 4 - Keys matching condition for SmartCache
 
 If both conditions are met, then significant memory reduction can be obtained. In the example of Figure 4, there are 11 entries, corresponding to 11 entries in SimpleCache. With SmartCache, this will be reduced to only 3 larger entries, where only the first 3 bytes of the key are used as key into the ObjectCache and the fourth byte is used to index into an array internal to the ObjectCache SmartCache object where the values are stored, as illustrated in Figure 5.
  
