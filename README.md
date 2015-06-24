@@ -149,7 +149,7 @@ And the read request takes a readRequest to return a readResponse.
 ##Writing a EchoX3 application
 
 Figure 3 illustrates the various components of a typical trellis application. In this section, we will build a complete EchoX3 application named SmartCache (included in the EchoX3 distribution).
-![Figure 3 Trellis application components](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
+![Figure 3](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
 ####Figure 3 Trellis application components
 
 ##SmartCache design
@@ -158,12 +158,13 @@ There is a cost to each item placed in a (simple or object) cache. Sometimes, th
 * The keys are composed in such a way that several items have the same key up to the last byte (You should use byte[] as keys. The API supports Serializable; however, byte[] are not compressed and essentially kept intact, as is required for this scheme.)
 
 For example, the set of 4 bytes keys illustrated in Figure 4 matches condition 2.
-![Figure 4 Keys matching condition for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338049/4bf26200-1a63-11e5-819f-7ca54a884073.jpg)
+
+![Figure 4](https://cloud.githubusercontent.com/assets/7895210/8338049/4bf26200-1a63-11e5-819f-7ca54a884073.jpg)
 ####Figure 4 Keys matching condition for SmartCache
 
 If both conditions are met, then significant memory reduction can be obtained. In the example of Figure 4, there are 11 entries, corresponding to 11 entries in SimpleCache. With SmartCache, this will be reduced to only 3 larger entries, where only the first 3 bytes of the key are used as key into the ObjectCache and the fourth byte is used to index into an array internal to the ObjectCache SmartCache object where the values are stored, as illustrated in Figure 5.
  
-![Figure 5 Splitting of the key for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338051/4bf488e6-1a63-11e5-992b-0990aadb1697.jpg)
+![Figure 5](https://cloud.githubusercontent.com/assets/7895210/8338051/4bf488e6-1a63-11e5-992b-0990aadb1697.jpg)
 ####Figure 5 Splitting of the key for SmartCache
 
 SmartCache will implement exactly the ITrellisSimpleCacheClient interface. However, using its own optimized way of storing the data, it will be more memory efficient.
