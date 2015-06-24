@@ -1,2 +1,2 @@
 # EchoX3
-Object Cache with Methods
+Distributed Object Cache with Methods
