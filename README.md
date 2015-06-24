@@ -288,3 +288,43 @@ Once you see these methods execute properly, you can look at the other methods o
 Clients are the user application calling entry points into libraries supplied by us. The initial offering will include a Java library . All client libraries will implement the same functionality in remote mode. The same Java client will support both Windows and Linux clients.
 
 The servers will be written entirely in 100% portable Java. They will run on Windows, Mac and Linux. Further, the configuration and automatic scalability system will support major cloud providers. It is expected that the v1 server will run on Windows. Yet, the code will be written with the goal to run on Windows, Mac and Linux operating systems.
+
+##Topography
+As illustrated (Figure 12), the servers are organized in groups called “clusters”. Each cluster is completely independent from the other clusters in terms of functionality and scalability. The major link between the various “connected” clusters is that, by being aware of each other, it is possible for a client to obtain access to any cluster after connecting to a single server in any cluster.
+ 
+![Figure 12](https://cloud.githubusercontent.com/assets/7895210/8338055/4c0630dc-1a63-11e5-9865-265d55dff887.jpg)
+####Figure 12 System overview
+
+At startup, a client only needs to connect to a single server belonging to any cluster of “the system”. It asks that server which servers are members of the cluster containing cache “X”. Any of the permanent servers can answer that question. The client then connects to the servers and is then connected directly to the cluster and independent of any other cluster within the enterprise system.
+
+Internally, each server is composed of three somewhat independent components:
+* Transport . On the receiving end, this component receives requests, posts them to the appropriate thread pool. On the other side of the transactions, this component is responsible for transmitting data to other components (e.g. responses to clients or requests to other servers)
+* A dispatcher. The director receives requests from clients and is responsible for applying the appropriate routing table to obtain the response required by the client.
+* A local ObjectCache responsible for managing the various named ObjectCache stored on the server.
+
+A direct implication of 2 above is that the system is a 2 hops system. This has a cost and provides benefits. The obvious cost is performance. Try the system and, if you find it too slow, tell us and we will fix it. All performance tests performed on our system (e.g. prototype) shows that it is as fast as the fastest commercial single hop system and it is much faster than most.
+
+The 2 hops approach has several advantages, including
+* Changes to the back-end (anything from OS maintenance requiring a server bounce to a major version upgrade of the backend) can be made transparently to the client.
+* A much higher scalability can be achieved.
+
+##Simplified client interface
+The client interface is extremely simple, by design…
+
+The first entry point is used to obtain a client instance object. Note that the instance is a singleton. There are two singleton within the system, one for local and one for remote. In a typical scenario, one may choose to use the local mode for early debugging and switch to remote (100% compatible) for integrated testing and production. In a more complex scenario, both may be used for different named objects. Of course, the use of both concurrently is supported.
+* Factory.getInstance().getSimpleClient (Boolean isLocal)
+    or
+    Factory.getInstance().getObjectClient (Boolean isLocal)
+
+The next call tells the system which named cache you want to use. Multiple calls can be made to access multiple named caches.
+* connectToCache(String name)
+
+Then the system is ready to be used with SimpleCache calls such as …
+* void put(String name, Serializable key, Serializable value)
+* Serializable get(String name, Serializable value)
+
+or ObjectCache calls such as
+* boolean writeOnly(String name, Serializable key, Serializable request)
+* Serializable readOnly(String name, Serializable key, Serializable request)
+
+Of course, all the appropriate bulk flavors of these calls are available in the complete API. The API will also include other utility entry points known to be useful in such systems.
