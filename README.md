@@ -380,11 +380,11 @@ Now, consider the single cycle highlighted. We can define the following variable
 
 Finally, we can calculate the fraction of the time spent in a GC pause (and therefore not running user code), DutyCycle(GC), as
 
-	DutyCycle(GC)=  (T(Pause))/(T(Cycle))*100%
+			DutyCycle(GC)=  (T(Pause))/(T(Cycle))*100%
 
 Applying this equation to the single cycle GC # 2 gives
 
-	DutyCycle(GC)=  (60 ms)/(4 sec)*100%=  (60 ms)/(4,000 ms)*100%=1.5%
+			DutyCycle(GC)=  (60 ms)/(4 sec)*100%=  (60 ms)/(4,000 ms)*100%=1.5%
 
 This means, in the example, that the JVM spends 1.5% of its time paused to performed garbage collection and 98.5% of its time running user code.
 
