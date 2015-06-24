@@ -25,9 +25,11 @@ Guiding principles are guidelines to be used when making decision; they are tie 
 **EchoX3** is a distributed object cache. The cache contains real objects (not byte[]). As the client makes calls to write new data to the object, it updates itself. During a read call, the object may return stored values or perform calculations and return the results of the calculations. The key is that a true object resides in the cache that can perform operations in-place.
 When the client performs a call (see Figure 1), the **EchoX3** system uses the cache name and the key to find the object. The client’s request is then passed to the object (Figure 2).
 
-![Figure 1: System overview: Routing](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
-####[Figure 1 "System overview: Routing" goes here]
-####[Figure 2 "System overview: Client request to cache object" goes here]
+![Figure 1 - System overview: Routing](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
+####Figure 1 - System overview: Routing
+
+![Figure 2 - System overview: Client request to cache object](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
+####[Figure 2 - System overview: Client request to cache object
 
 To simplify the development effort, a number of logistics tasks are handled automatically by the **EchoX3** system:
 
