@@ -292,14 +292,8 @@ The servers will be written entirely in 100% portable Java. They will run on Win
 ##Topography
 As illustrated (Figure 12), the servers are organized in groups called “clusters”. Each cluster is completely independent from the other clusters in terms of functionality and scalability. The major link between the various “connected” clusters is that, by being aware of each other, it is possible for a client to obtain access to any cluster after connecting to a single server in any cluster.
 
-<table>
-<tr><tc>
 ![Figure 12](https://cloud.githubusercontent.com/assets/7895210/8338055/4c0630dc-1a63-11e5-9865-265d55dff887.jpg)
-</tc></tr>
-<tr><tc>
-####---Figure 12 System overview
-</tc></tr>
-</table>
+####-  Figure 12 System overview
 
 At startup, a client only needs to connect to a single server belonging to any cluster of “the system”. It asks that server which servers are members of the cluster containing cache “X”. Any of the permanent servers can answer that question. The client then connects to the servers and is then connected directly to the cluster and independent of any other cluster within the enterprise system.
 
