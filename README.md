@@ -293,7 +293,7 @@ The servers will be written entirely in 100% portable Java. They will run on Win
 As illustrated (Figure 12), the servers are organized in groups called “clusters”. Each cluster is completely independent from the other clusters in terms of functionality and scalability. The major link between the various “connected” clusters is that, by being aware of each other, it is possible for a client to obtain access to any cluster after connecting to a single server in any cluster.
 
 ![Figure 12](https://cloud.githubusercontent.com/assets/7895210/8338055/4c0630dc-1a63-11e5-9865-265d55dff887.jpg)
-<span style="font-weight:bold;">Figure 12 System overview</span>
+####Figure 12 System overview
 
 At startup, a client only needs to connect to a single server belonging to any cluster of “the system”. It asks that server which servers are members of the cluster containing cache “X”. Any of the permanent servers can answer that question. The client then connects to the servers and is then connected directly to the cluster and independent of any other cluster within the enterprise system.
 
@@ -330,3 +330,16 @@ or ObjectCache calls such as
 * Serializable readOnly(String name, Serializable key, Serializable request)
 
 Of course, all the appropriate bulk flavors of these calls are available in the complete API. The API will also include other utility entry points known to be useful in such systems.
+
+##A simple session
+The first call made by the client is to the Factory, to obtain an instance of the client. By passing true or false as the single parameter (isLocal), the object return will either be local or remote. Both object implement exactly the same interface and will behave identically.
+
+##Connect: Local mode
+Calls to conectoBlobCache and connectToObjectCache will actually create the BlobCache or the ObjectCache on the local machine, in the application’s heap.
+
+##Connect: Remote mode
+The “connect*” family of calls cause the client to connect to a director on the system. Any director will do. The remote server is queried for the list of servers responsible for the name supplied (Steps 1 and 2 in Figure 12). Unbeknownst to the client, this is the list of servers in the cluster containing the named BlobCache or ObjectCache, on which the clients will be able to talk to the servers.
+
+Internally, the client library establishes a connection to each server/director and builds a load balancing sequence.
+ 
+In local mode, other calls are simply passed to the local server. The discussion below applies only to the remote mode.
