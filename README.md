@@ -27,7 +27,7 @@ When the client performs a call (see Figure 1), the **EchoX3** system uses the c
 ![Figure 1](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
 <p><i><b>Figure 1 System overview: Routing</b></i></p>
 ![Figure 2](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
-<p><b>Figure 2 System overview: Client request to cache object</b></p>
+<p><i><b>Figure 2 System overview: Client request to cache object</b></i></p>
 To simplify the development effort, a number of logistics tasks are handled automatically by the **EchoX3** system:
 
 * Connection management
@@ -150,7 +150,7 @@ And the read request takes a readRequest to return a readResponse.
 
 Figure 3 illustrates the various components of a typical **EchoX3** application. In this section, we will build a complete **EchoX3** application named SmartCache (included in the **EchoX3** distribution).
 ![Figure 3](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
-<p><b>Figure 3 EchoX3 application components</b></p>
+<p><i><b>Figure 3 EchoX3 application components</b></i></p>
 
 ##SmartCache design
 There is a cost to each item placed in a (simple or object) cache. Sometimes, the right conditions are present where this cost can be minimized. SmartCache is a simple cache that minimizes this cost when the following conditions are present:
@@ -160,12 +160,12 @@ There is a cost to each item placed in a (simple or object) cache. Sometimes, th
 For example, the set of 4 bytes keys illustrated in Figure 4 matches condition 2.
 
 ![Figure 4](https://cloud.githubusercontent.com/assets/7895210/8338049/4bf26200-1a63-11e5-819f-7ca54a884073.jpg)
-<p><b>Figure 4 Keys matching condition for SmartCache</b></p>
+<p><i><b>Figure 4 Keys matching condition for SmartCache</b></i></p>
 
 If both conditions are met, then significant memory reduction can be obtained. In the example of Figure 4, there are 11 entries, corresponding to 11 entries in SimpleCache. With SmartCache, this will be reduced to only 3 larger entries, where only the first 3 bytes of the key are used as key into the ObjectCache and the fourth byte is used to index into an array internal to the ObjectCache SmartCache object where the values are stored, as illustrated in Figure 5.
  
 ![Figure 5](https://cloud.githubusercontent.com/assets/7895210/8338051/4bf488e6-1a63-11e5-992b-0990aadb1697.jpg)
-<p><b>Figure 5 Splitting of the key for SmartCache</b></p>
+<p><i><b>Figure 5 Splitting of the key for SmartCache</b></i></p>
 
 SmartCache will implement exactly the ITrellisSimpleCacheClient interface. However, using its own optimized way of storing the data, it will be more memory efficient.
 
@@ -185,7 +185,7 @@ The member variables for SmartCacheObject become the array version of the member
 		private long[]	m_expirationTimeListMS	= new long[256];
 
 	}
-<p><b>Figure 6 Member variables for SmartCache</b></p>
+<p><i><b>Figure 6 Member variables for SmartCache</b></i></p>
 
 The member variable m_cacheStatus matches same in SimpleCache and maintains the configuration data along with counters. Each object has a pointer to the object owned by the factory associated with the named cache.
 
@@ -209,14 +209,14 @@ Flush can be a dangerous call in a conventional system. The problem is that, imm
 			cache.put(key, foo);
 		}
 		// Use the value of foo
-<p><b>Figure 7 Simple application using cache</b></p>
+<p><i><b>Figure 7 Simple application using cache</b></i></p>
 
 After a flush, every call will go to the backend and risks overloading it. To avoid this load spike on the backend, **EchoX3** supports a soft-flush. The flush is spread over N milli-seconds. The client API for flush takes the parameter flushDurationMS. On each server, **EchoX3** utilizes a linear function to distribute the flush time of each object over the flush duration. **EchoX3** then immediately tells each object at which time it should flush itself. It is the responsibility of the object to determine based on its own semantics how it wants to proceed.
 
 In the case of SimpleCache or SmartCache, this is straight forward as the read and write times can be adjusted to ensure the object does not live beyond the scheduled flush time. For each other class of object, the details may be different, up to and including some object that will ignore the call and some object that will ignore the parameter timeFlushMS and flush themselves immediately. That part belongs to the owner (writer/coder) of the object.
  
 ![Figure 8](https://cloud.githubusercontent.com/assets/7895210/8338050/4bf44db8-1a63-11e5-912b-1093ad150378.jpg)
-<p><b>Figure 8 Adjusting read/write time for soft flush in SimpleCache and SmartCache</b></p>
+<p><i><b>Figure 8 Adjusting read/write time for soft flush in SimpleCache and SmartCache</b></i></p>
 
 ###void doMaintenance(int memoryLevelPercent)
 The method doMaintenance is where the object cleans itself. In the case of a SmartCache, it will go through each of its item and delete (nullify) each expired item.
@@ -238,7 +238,7 @@ For SmartCache, there are two ways of implementing this method
 The client wrapper acts as a simplification agent between the clients of the **EchoX3** application and the **EchoX3** system. To its clients, the wrapper exposes a simple interface in clients “units”. For example, the SmartCache exposes a plain cache interface. The implementation details are hidden from the clients. The wrapper takes in requests and translates them into **EchoX3** calls, either to the SimpleCache or to the ObjectCache, as is appropriate. In a more advanced scenario, a wrapper’s single entry point could require multiple calls to perform its task before returning to the caller.
  
 ![Figure 9](https://cloud.githubusercontent.com/assets/7895210/8338057/4c06ccfe-1a63-11e5-8ecc-8ed4cd153b45.jpg)
-<p><b>Figure 9 Client wrapper interfaces</b></p>
+<p><i><b>Figure 9 Client wrapper interfaces</b></i></p>
 
 For SmartCache, the obvious and simplest approach is to expose the same API as is used for the **EchoX3** SimpleCache: ISimpleCacheClient:
 
@@ -257,7 +257,7 @@ The plain SmartCacheRequest is used in both Read and Write mode and is the class
 		private int				m_index;
 	}
 
-<p><b>Figure 10 Fields of SmartCacheRequest</b></p>
+<p><i><b>Figure 10 Fields of SmartCacheRequest</b></i></p>
 
 This class serves multiple purposes as it not only act as a base class for SmartCacheWriteRequest (see below), it is also the class that parses the full key into its components. The components are stored in the two member variables. Note that m_objectKey is marked transient as it does not need to be transmitted to the server. It is used directly as a parameter (key) to the writeOnly (or readOnly) call.
 
@@ -269,7 +269,7 @@ The write request extends SmartCacheRequest, adding the byte[] corresponding to 
 		private byte[]		m_value;
 	}
 
-<p><b>Figure 11 Fields of SmartCacheWriteRequest</b></p>
+<p><i><b>Figure 11 Fields of SmartCacheWriteRequest</b></i></p>
 
 ###ReadRequest
 Given the simplicity of this application, the read request is simply the index of the value to retrieve. The class SmartCacheRequest is used to create the required key components.
@@ -293,7 +293,7 @@ The servers will be written entirely in 100% portable Java. They will run on Win
 As illustrated (Figure 12), the servers are organized in groups called “clusters”. Each cluster is completely independent from the other clusters in terms of functionality and scalability. The major link between the various “connected” clusters is that, by being aware of each other, it is possible for a client to obtain access to any cluster after connecting to a single server in any cluster.
 
 ![Figure 12](https://cloud.githubusercontent.com/assets/7895210/8338055/4c0630dc-1a63-11e5-9865-265d55dff887.jpg)
-<p><b>Figure 12 System overview</b></p>
+<p><i><b>Figure 12 System overview</b></i></p>
 
 At startup, a client only needs to connect to a single server belonging to any cluster of “the system”. It asks that server which servers are members of the cluster containing cache “X”. Any of the permanent servers can answer that question. The client then connects to the servers and is then connected directly to the cluster and independent of any other cluster within the enterprise system.
 
@@ -367,7 +367,7 @@ When asked what I do for a living, I could easily say I work in garbage. For **E
 First, let’s consider the simplified case where GC is extremely stable and all GCs occur at fixed regular intervals and each last exactly the same time. This is illustrated in Figure 13.
  
 ![Figure 13](https://cloud.githubusercontent.com/assets/7895210/8338059/4c089444-1a63-11e5-8741-f3f1517f4d92.jpg)
-<p><b>Figure 13 GC measurement: single measurement</b></p>
+<p><i><b>Figure 13 GC measurement: single measurement</b></i></p>
 
 Now, consider the single cycle highlighted. We can define the following variables:
 * T(Cycle		Duration of a single cycle (30 seconds)
@@ -396,7 +396,7 @@ A full cycle can now divided in three phases , as illustrated in Figure 14:
 * User code: The objective is always to optimize the time spent in this mode. However, in a machine running hot, a high rate of allocation of short-lived object will drive the time spent in GC.
  
 ![Figure 14](https://cloud.githubusercontent.com/assets/7895210/8338058/4c0865fa-1a63-11e5-9b35-a73de073252a.jpg)
-<p><b>Figure 14 Three phases of a single GC cycle</b></p>
+<p><i><b>Figure 14 Three phases of a single GC cycle</b></i></p>
 
 The first step in “tuning” GC is finding the proper collector configuration for the memory utilization pattern of your application. Next comes the trade-off between minimizing DutyCycle(GC) and T(Pause). Typically, improving degrades the other and one must find a reasonable balance.
 
@@ -404,7 +404,7 @@ The first step in “tuning” GC is finding the proper collector configuration 
 In practice, GCs do not occur at exactly fixed intervals and do not always take the same amount of time … but they are in the same ballpark. What counts is that they do not vary widely. They are close enough that working with averages is sufficient for our needs. 
  
 ![Figure 15](https://cloud.githubusercontent.com/assets/7895210/8338060/4c08d846-1a63-11e5-98d1-920169c95fa5.jpg)
-<p><b>Figure 15 GC measurement: average measurement</b></p>
+<p><i><b>Figure 15 GC measurement: average measurement</b></i></p>
 
 Average measurements can be made by measuring at regular intervals
 * Count of GC =Count
@@ -424,7 +424,7 @@ The lifetime measurements provide coarse, but stable numbers, sometimes useful f
 The MBean are the objects visible in JMX. The classes described below measure the GC parameters and expose them via JMX such that they are visible in JConsole or your favorite tool to look at JMX custom objects.
 
 ![Figure 16](https://cloud.githubusercontent.com/assets/7895210/8338056/4c06c83a-1a63-11e5-910e-153c7d285c09.jpg)
-<p><b>Figure 16 GC measurement</b></p>
+<p><i><b>Figure 16 GC measurement</b></i></p>
 
 ###The classes
 For programmers who want to expose this information in their application.
