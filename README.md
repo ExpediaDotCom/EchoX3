@@ -4,7 +4,7 @@
 **EchoX3** is a distributed object cache that allows methods to be added to those objects so they can be called remotely. It is grounded on distributed hash-map like scalability, Java nio extreme performance and a simple flexible set of bulk (multiple keys) API. **EchoX3** allows for incredibly powerful applications across terabytes of data, running on hundreds of servers, with on-the-fly changes to the algorithms (code). All this supported by a fanatical dedication to zero planned/unplanned downtime and ease of operation for all parties involved in the lifecycle of your **EchoX3** application. It enables..
 * Developers whose life is made simpler with simple APIs and built-in functionality
 * The operations team who receives a high-reliability, easy to manage system
-* The management team who has to make the easy decision to choose Trellis
+* The management team who has to make the easy decision to choose **EchoX3**
 
 ##Guiding design principles
 Guiding principles are guidelines to be used when making decision; they are tie breakers; they make the difference between a bug being marked “Won’t fix”, “Postponed” and “Must fix”.
@@ -47,9 +47,9 @@ Of course, each of the **EchoX3** APIs is made more powerful with a complement o
 This section is for those who do not necessary deal with hash maps every day and may need a refresher on how they work. Those intimately familiar with hash map technology may skip this section.
 
 	NOTE:	This section discusses a basic HashMap, not necessarily the HashMap or
-			hash function used by Trellis or by the standard Java classes.
+			hash function used by **EchoX3** or by the standard Java classes.
 
-Much of the work done by Trellis is mapping from a key to some object. Obviously, from the user’s key to the user’s ITrellisCacheObject, and also at several places for management of internal structures. How does one search for the key? Some of the known techniques include
+Much of the work done by **EchoX3** is mapping from a key to some object. Obviously, from the user’s key to the user’s ITrellisCacheObject, and also at several places for management of internal structures. How does one search for the key? Some of the known techniques include
 
 * Enumeration: Simply walking a complete list of the possible elements until the correct one is found. Statistically, one would have to walk about half the list to find the correct element. It is known as a O(n) solution. For example, if there are 1 million (1,000,000) items in a list, you will have to walk about 500,000 on average to find the correct one.
 * Binary search: This can be accomplished by storing the elements in a binary tree or by storing them in a sorted array. Either way, on each test, one looks at the middle of the possibility and eliminates about half the range. If there are 2n elements, this will take n tests to find the correct element and is referred as a O(log(n)) solution. Getting back to our list of 1,000,000 items, the correct element can now be found in about 20 tries (220 = 1,048,576).
@@ -73,13 +73,13 @@ This modulo of this number is used to distribute the keys amongst a set number o
 In the simple case, each bucket contains a list of the items that map to the buckets. The power of the hash map is achieved when the number of buckets is sufficiently large that there are only very few items per buckets (0, 1 or 2). For example, the Java hash map defaults to a maximum occupancy of 0.75 items per bucket. When more items are placed in the map, Java automatically increases the number of buckets.
 When searching within a hash map, one first uses the hash of the key to find the correct bucket, and then walks the list of items in the bucket for the one matching exactly the key. In a properly balanced hash map, this results in, statistically, a single compare to find the correct item. The hash map is said to be of order O(1). The time required to find an item is NOT dependent on the number of items in the map. Of course, more items result in larger the map and larger the memory requirement.
 
-##Hello "EchoX3"
+#Hello "EchoX3"
 Every good programming manual starts with a HelloWorld program. This is where you make sure you include the proper libraries, perform the correct initialization and can make the most basic call into the new WhateverNewThingYouAreUsing.
 
 	NOTE:	Listings for all samples discussed are in section 6. The code for the Hello applications
-			can also be found under the module “Hello” as part of the EchoX3 distribution.
+			can also be found under the module “Hello” as part of the **EchoX3** distribution.
 
-This section will walk you through "Hello Trellis", from your first program using local mode through setting-up a server and making remote calls to the remote server.
+This section will walk you through "Hello **EchoX3**", from your first program using local mode through setting-up a server and making remote calls to the remote server.
 
 ##Dependencies…
 **EchoX3** is composed of two separate and distinct deliverables:
@@ -96,11 +96,11 @@ The server on the other hand runs independently of user code and does not have t
 * TBD
 
 ##HelloSimple.java
-Within EchoX3, the first step is always to obtain the factory object.
+Within **EchoX3**, the first step is always to obtain the factory object.
 
 	IClientFactory	factory	= ClientFactory.getInstance();
 
-When operating in local mode, it is necessary to tell Trellis how to configure the cache(s) that will be used. It is recommended that the call to putLocalConfiuration() be made in all cases, as it facilitate the switching between local and remote mode.
+When operating in local mode, it is necessary to tell **EchoX3** how to configure the cache(s) that will be used. It is recommended that the call to putLocalConfiuration() be made in all cases, as it facilitate the switching between local and remote mode.
 
 	// Set the configuration file for this cache, required only in local.
 	URL			url		= ClassLoader.getSystemResource(FILE_NAME);
@@ -144,13 +144,13 @@ And the read request takes a readRequest to return a readResponse.
 
 ##Hello EchoX3 server
 
-	TODO
+	[[[TODO]]]
 
-##Writing a EchoX3 application
+#Writing a EchoX3 application
 
-Figure 3 illustrates the various components of a typical trellis application. In this section, we will build a complete EchoX3 application named SmartCache (included in the EchoX3 distribution).
+Figure 3 illustrates the various components of a typical **EchoX3** application. In this section, we will build a complete **EchoX3** application named SmartCache (included in the **EchoX3** distribution).
 ![Figure 3](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
-<p><b>Figure 3 Trellis application components</b></p>
+<p><b>Figure 3 EchoX3 application components</b></p>
 
 ##SmartCache design
 There is a cost to each item placed in a (simple or object) cache. Sometimes, the right conditions are present where this cost can be minimized. SmartCache is a simple cache that minimizes this cost when the following conditions are present:
@@ -172,7 +172,7 @@ SmartCache will implement exactly the ITrellisSimpleCacheClient interface. Howev
 ##SmartCacheObject implements ICacheObject
 The core of the application is the SmartCache object. In this case, to be fully compatible with the regular SimpleCache, SmartCache needs to support expiration based on TimeWrite or TimeRead. This means we need to maintain an m_lastWrite and m_lastRead for each entry in addition to the m_data.
 
-##Member variables
+###Member variables
 The member variables for SmartCacheObject become the array version of the member variables for SimpleCacheObject, as illustrated in Figure 6.
 
 	public class SmartCacheObject implements ITrellisCacheObject
@@ -193,13 +193,13 @@ Appropriate getters are available on each of these member variables so they can 
 
 The readOnly() and writeOnly() method will be dealt with in the section on request below. The remaining ITrellisCacheObject methods are discussed here.
 
-##Constructor
+###Constructor
 Following the pattern of TrellisSimpleCacheObject, the constructor takes the TrellisSimpleCacheStatusHolder and keeps a pointer to the master owned by the factory object. After final construction, all data is initialized to null.
 
-##void updateConfiguration(TrellisCacheConfiguration configuration)
-This method is called on existing objects to inform them that the configuration has changed. The factory is always called first (guaranteed by Trellis). This means that the m_cacheStatus has been updated before this call. The parameter configuration is ignored and m_expirationTimeListMS is updated for the new configuration.
+###void updateConfiguration(TrellisCacheConfiguration configuration)
+This method is called on existing objects to inform them that the configuration has changed. The factory is always called first (guaranteed by **EchoX3**). This means that the m_cacheStatus has been updated before this call. The parameter configuration is ignored and m_expirationTimeListMS is updated for the new configuration.
 
-##void flush(long timeNowMS, long timeFlushMS)
+###void flush(long timeNowMS, long timeFlushMS)
 Flush can be a dangerous call in a conventional system. The problem is that, immediately after the flush, there are no entries in the cache and every call is a miss. A simplistic application using caching is illustrated in Figure 7.
 
 		Foo		foo	= cache.get(key);
@@ -211,14 +211,14 @@ Flush can be a dangerous call in a conventional system. The problem is that, imm
 		// Use the value of foo
 <p><b>Figure 7 Simple application using cache</b></p>
 
-After a flush, every call will go to the backend and risks overloading it. To avoid this load spike on the backend, Trellis supports a soft-flush. The flush is spread over N milli-seconds. The client API for flush takes the parameter flushDurationMS. On each server, Trellis utilizes a linear function to distribute the flush time of each object over the flush duration. Trellis then immediately tells each object at which time it should flush itself. It is the responsibility of the object to determine based on its own semantics how it wants to proceed.
+After a flush, every call will go to the backend and risks overloading it. To avoid this load spike on the backend, **EchoX3** supports a soft-flush. The flush is spread over N milli-seconds. The client API for flush takes the parameter flushDurationMS. On each server, **EchoX3** utilizes a linear function to distribute the flush time of each object over the flush duration. **EchoX3** then immediately tells each object at which time it should flush itself. It is the responsibility of the object to determine based on its own semantics how it wants to proceed.
 
 In the case of SimpleCache or SmartCache, this is straight forward as the read and write times can be adjusted to ensure the object does not live beyond the scheduled flush time. For each other class of object, the details may be different, up to and including some object that will ignore the call and some object that will ignore the parameter timeFlushMS and flush themselves immediately. That part belongs to the owner (writer/coder) of the object.
  
 ![Figure 8](https://cloud.githubusercontent.com/assets/7895210/8338050/4bf44db8-1a63-11e5-912b-1093ad150378.jpg)
 <p><b>Figure 8 Adjusting read/write time for soft flush in SimpleCache and SmartCache</b></p>
 
-##void doMaintenance(int memoryLevelPercent)
+###void doMaintenance(int memoryLevelPercent)
 The method doMaintenance is where the object cleans itself. In the case of a SmartCache, it will go through each of its item and delete (nullify) each expired item.
 
 The parameter memoryLevelPercent indicates the level of memory pressure under which the system is currently operating. In other words, this is the percent of normal memory the application should use. When the number is below 100, a well-behaved application should reduce its memory requirement.
@@ -227,20 +227,20 @@ In the cache of a standard caching application with a time-to-live (TTL), there 
 
 The configuration parameters MaintenancePeriodNumber and MaintenancePeriodUnits are used to configure on a per named cache basis how often this method is called.
 
-##Boolean canDelete()
-This method is called after every operation which can modify the object (doMaintenance and writeOnly). Trellis is asking the object is it can be deleted. For SmartCache, the answer is yes when all elements of the data list are null.
+###Boolean canDelete()
+This method is called after every operation which can modify the object (doMaintenance and writeOnly). **EchoX3** is asking the object is it can be deleted. For SmartCache, the answer is yes when all elements of the data list are null.
 
 For SmartCache, there are two ways of implementing this method
 * Walk the list until a non-null is found (return false) or the end of list is found (return true)
 * Keep a count of non-null elements and return count == 0
 
 ##Client wrapper implements ISimpleCacheClient
-The client wrapper acts as a simplification agent between the clients of the EchoX3 application and the EchoX3 system. To its clients, the wrapper exposes a simple interface in clients “units”. For example, the SmartCache exposes a plain cache interface. The implementation details are hidden from the clients. The wrapper takes in requests and translates them into Trellis calls, either to the SimpleCache or to the ObjectCache, as is appropriate. In a more advanced scenario, a wrapper’s single entry point could require multiple calls to perform its task before returning to the caller.
+The client wrapper acts as a simplification agent between the clients of the **EchoX3** application and the **EchoX3** system. To its clients, the wrapper exposes a simple interface in clients “units”. For example, the SmartCache exposes a plain cache interface. The implementation details are hidden from the clients. The wrapper takes in requests and translates them into **EchoX3** calls, either to the SimpleCache or to the ObjectCache, as is appropriate. In a more advanced scenario, a wrapper’s single entry point could require multiple calls to perform its task before returning to the caller.
  
 ![Figure 9](https://cloud.githubusercontent.com/assets/7895210/8338057/4c06ccfe-1a63-11e5-8ecc-8ed4cd153b45.jpg)
 <p><b>Figure 9 Client wrapper interfaces</b></p>
 
-For SmartCache, the obvious and simplest approach is to expose the same API as is used for the Trellis SimpleCache: ISimpleCacheClient:
+For SmartCache, the obvious and simplest approach is to expose the same API as is used for the **EchoX3** SimpleCache: ISimpleCacheClient:
 
 		class SmartCacheClient implements ITrellisSimpleCacheClient
 
@@ -248,7 +248,7 @@ For SmartCache, the obvious and simplest approach is to expose the same API as i
 There are several approaches possible to the complexity of the request objects. Remember that they are full-fledged Java objects that will exist on the server. At the simple end, they are POJO used by the cache object to determine the request and request parameters. At the more complex end, they can contain the algorithm to run on the cache object’s data.
 For SmartCache, the simplicity of the problem lends itself towards the POJO end of the spectrum.
 
-##SmartCacheRequest
+###SmartCacheRequest
 The plain SmartCacheRequest is used in both Read and Write mode and is the class that understand how to parse the key to extract the bytes corresponding to the object’s key and the byte corresponding to the array index for the element within the cache object.
 
 	public class SmartCacheRequest implements Serializable
@@ -261,7 +261,7 @@ The plain SmartCacheRequest is used in both Read and Write mode and is the class
 
 This class serves multiple purposes as it not only act as a base class for SmartCacheWriteRequest (see below), it is also the class that parses the full key into its components. The components are stored in the two member variables. Note that m_objectKey is marked transient as it does not need to be transmitted to the server. It is used directly as a parameter (key) to the writeOnly (or readOnly) call.
 
-##WriteRequest
+###WriteRequest
 The write request extends SmartCacheRequest, adding the byte[] corresponding to the value to be stored (see Figure 11).
 
 	public class SmartCacheWriteRequest extends SmartCacheRequest
@@ -271,7 +271,7 @@ The write request extends SmartCacheRequest, adding the byte[] corresponding to 
 
 <p><b>Figure 11 Fields of SmartCacheWriteRequest</b></p>
 
-##ReadRequest
+###ReadRequest
 Given the simplicity of this application, the read request is simply the index of the value to retrieve. The class SmartCacheRequest is used to create the required key components.
 
 ##Debugging the application
@@ -284,7 +284,7 @@ It is straight forward to debug into the client wrapper, up to the call into obj
 
 Once you see these methods execute properly, you can look at the other methods on your object (e.g. doMaintenance).
 
-##Architecture overview
+#Architecture overview
 Clients are the user application calling entry points into libraries supplied by us. The initial offering will include a Java library . All client libraries will implement the same functionality in remote mode. The same Java client will support both Windows and Linux clients.
 
 The servers will be written entirely in 100% portable Java. They will run on Windows, Mac and Linux. Further, the configuration and automatic scalability system will support major cloud providers. It is expected that the v1 server will run on Windows. Yet, the code will be written with the goal to run on Windows, Mac and Linux operating systems.
@@ -334,10 +334,10 @@ Of course, all the appropriate bulk flavors of these calls are available in the 
 ##A simple session
 The first call made by the client is to the Factory, to obtain an instance of the client. By passing true or false as the single parameter (isLocal), the object return will either be local or remote. Both object implement exactly the same interface and will behave identically.
 
-##Connect: Local mode
+###Connect: Local mode
 Calls to conectoBlobCache and connectToObjectCache will actually create the BlobCache or the ObjectCache on the local machine, in the application’s heap.
 
-##Connect: Remote mode
+###Connect: Remote mode
 The “connect*” family of calls cause the client to connect to a director on the system. Any director will do. The remote server is queried for the list of servers responsible for the name supplied (Steps 1 and 2 in Figure 12). Unbeknownst to the client, this is the list of servers in the cluster containing the named BlobCache or ObjectCache, on which the clients will be able to talk to the servers.
 
 Internally, the client library establishes a connection to each server/director and builds a load balancing sequence.
@@ -359,7 +359,7 @@ This project does NOT use the standard Java ReadWriteLocks are they are known to
 #Monitoring (aka counting beans)
 
 ##Garbage collection
-When asked what I do for a living, I could easily say I work in garbage. For EchoX3 to maintain its record of 99% of the requests faster than X ms, it is not sufficient to write good (great) code. The garbage collection beast must be tamed. When operating at high throughput on large heap JVM, the duration and frequency of the garbage collection cycles becomes as critical as the code.In order to manage GC, it is essential to have adequate monitoring tools. These are discussed below…
+When asked what I do for a living, I could easily say I work in garbage. For **EchoX3** to maintain its record of 99% of the requests faster than X ms, it is not sufficient to write good (great) code. The garbage collection beast must be tamed. When operating at high throughput on large heap JVM, the duration and frequency of the garbage collection cycles becomes as critical as the code.In order to manage GC, it is essential to have adequate monitoring tools. These are discussed below…
 
 ###The theory
 
@@ -391,7 +391,7 @@ This means, in the example, that the JVM spends 1.5% of its time paused to perfo
 There is more. The collection took a total of 1.2 second. This means that some number of threads was running in parallel to the user code performing some garbage collection task during those 1.2 seconds, T(Clock).
 
 A full cycle can now divided in three phases , as illustrated in Figure 14:
-* GC Pause: During this phase, only GC runs and the user code is halted. The limiting factor here is related to the SLA of the relevant service (e.g. Trellis). For the fraction of requests that arrive during a GC (this was 1.5% in the example above), what is the degradation in response time you and your customers are willing to accept?
+* GC Pause: During this phase, only GC runs and the user code is halted. The limiting factor here is related to the SLA of the relevant service (e.g. **EchoX3**). For the fraction of requests that arrive during a GC (this was 1.5% in the example above), what is the degradation in response time you and your customers are willing to accept?
 * GC Concurrent: Here, both GC and user code are running. This implies that some of the processing power available on the server (i.e. cores, memory bandwidth) is used for the garbage collection tasks and is not available to the user code. Unless the servers are running extremely hot, GC concurrent typically does not cause significant problems.
 * User code: The objective is always to optimize the time spent in this mode. However, in a machine running hot, a high rate of allocation of short-lived object will drive the time spent in GC.
  
@@ -399,3 +399,32 @@ A full cycle can now divided in three phases , as illustrated in Figure 14:
 <p><b>Figure 14 Three phases of a single GC cycle</b></p>
 
 The first step in “tuning” GC is finding the proper collector configuration for the memory utilization pattern of your application. Next comes the trade-off between minimizing DutyCycle(GC) and T(Pause). Typically, improving degrades the other and one must find a reasonable balance.
+
+####Average measurement
+In practice, GCs do not occur at exactly fixed intervals and do not always take the same amount of time … but they are in the same ballpark. What counts is that they do not vary widely. They are close enough that working with averages is sufficient for our needs. 
+ 
+![Figure 15](https://cloud.githubusercontent.com/assets/7895210/8338060/4c08d846-1a63-11e5-98d1-920169c95fa5.jpg)
+<p><b>Figure 15 GC measurement: average measurement</b></p>
+
+Average measurements can be made by measuring at regular intervals
+* Count of GC =Count
+* Sum of pause = Sum(Pause)
+* Duration of interval = Period(Interval)
+
+From which one can calculate Average(Pause), Period(Cycle), and DutyCycle(GC).
+
+The duration of a garbage collection (the 10 sec or so above) can also be used to determine what fraction of the time is spent in collection regardless of pauses. This is particularly useful in busy JVMs: If the collector is constantly running, even if the pauses are at acceptable levels, it may be an indication that the JVM is running near its limit. A small increase in load may push it to the point where the collector cannot keep up, with possibly disastrous results.
+
+####JVM lifetime measurement
+The lifetime measurements are made in a manner similar to the average measurements, except the measurement period is always “from the start of the JVM until now”.
+
+The lifetime measurements provide coarse, but stable numbers, sometimes useful from a JVM that sees essentially constant or relatively constant load (e.g. production or specific stress servers). In contrast, the average measurements provide more immediate measurement (e.g. for the past minute), at the cost of being more noisy. The combination of both typically provides good insight into the behavior of the JVM.
+
+###The MBean (JMX)
+The MBean are the objects visible in JMX. The classes described below measure the GC parameters and expose them via JMX such that they are visible in JConsole or your favorite tool to look at JMX custom objects.
+
+![Figure 16](https://cloud.githubusercontent.com/assets/7895210/8338056/4c06c83a-1a63-11e5-910e-153c7d285c09.jpg)
+<p><b>Figure 16 GC measurement</b></p>
+
+###The classes
+For programmers who want to expose this information in their application.
