@@ -238,8 +238,53 @@ For SmartCache, there are two ways of implementing this method
 The client wrapper acts as a simplification agent between the clients of the EchoX3 application and the EchoX3 system. To its clients, the wrapper exposes a simple interface in clients “units”. For example, the SmartCache exposes a plain cache interface. The implementation details are hidden from the clients. The wrapper takes in requests and translates them into Trellis calls, either to the SimpleCache or to the ObjectCache, as is appropriate. In a more advanced scenario, a wrapper’s single entry point could require multiple calls to perform its task before returning to the caller.
  
 ![Figure 9](https://cloud.githubusercontent.com/assets/7895210/8338057/4c06ccfe-1a63-11e5-8ecc-8ed4cd153b45.jpg)
-Figure 9 Client wrapper interfaces
+####Figure 9 Client wrapper interfaces
 
 For SmartCache, the obvious and simplest approach is to expose the same API as is used for the Trellis SimpleCache: ISimpleCacheClient:
 
 		class SmartCacheClient implements ITrellisSimpleCacheClient
+
+##Request Objects
+There are several approaches possible to the complexity of the request objects. Remember that they are full-fledged Java objects that will exist on the server. At the simple end, they are POJO used by the cache object to determine the request and request parameters. At the more complex end, they can contain the algorithm to run on the cache object’s data.
+For SmartCache, the simplicity of the problem lends itself towards the POJO end of the spectrum.
+
+##SmartCacheRequest
+The plain SmartCacheRequest is used in both Read and Write mode and is the class that understand how to parse the key to extract the bytes corresponding to the object’s key and the byte corresponding to the array index for the element within the cache object.
+
+	public class SmartCacheRequest implements Serializable
+	{
+		private transient byte[]		m_objectKey;
+		private int				m_index;
+	}
+
+####Figure 10 Fields of SmartCacheRequest
+
+This class serves multiple purposes as it not only act as a base class for SmartCacheWriteRequest (see below), it is also the class that parses the full key into its components. The components are stored in the two member variables. Note that m_objectKey is marked transient as it does not need to be transmitted to the server. It is used directly as a parameter (key) to the writeOnly (or readOnly) call.
+
+##WriteRequest
+The write request extends SmartCacheRequest, adding the byte[] corresponding to the value to be stored (see Figure 11).
+
+	public class SmartCacheWriteRequest extends SmartCacheRequest
+	{
+		private byte[]		m_value;
+	}
+
+####Figure 11 Fields of SmartCacheWriteRequest
+
+##ReadRequest
+Given the simplicity of this application, the read request is simply the index of the value to retrieve. The class SmartCacheRequest is used to create the required key components.
+
+##Debugging the application
+The first phase of debugging takes place in **ClientType.Local**.
+
+It is straight forward to debug into the client wrapper, up to the call into objectCache.writeOnly(). At this point, you may want to set some breakpoints to see what your code is doing. The following are key entry points:
+* ObjectFactory.createObject()
+* cacheObject.writeOnly()
+* cacheObject.readOnly()
+
+Once you see these methods execute properly, you can look at the other methods on your object (e.g. doMaintenance).
+
+##Architecture overview
+Clients are the user application calling entry points into libraries supplied by us. The initial offering will include a Java library . All client libraries will implement the same functionality in remote mode. The same Java client will support both Windows and Linux clients.
+
+The servers will be written entirely in 100% portable Java. They will run on Windows, Mac and Linux. Further, the configuration and automatic scalability system will support major cloud providers. It is expected that the v1 server will run on Windows. Yet, the code will be written with the goal to run on Windows, Mac and Linux operating systems.
