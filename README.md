@@ -362,3 +362,40 @@ This project does NOT use the standard Java ReadWriteLocks are they are known to
 When asked what I do for a living, I could easily say I work in garbage. For EchoX3 to maintain its record of 99% of the requests faster than X ms, it is not sufficient to write good (great) code. The garbage collection beast must be tamed. When operating at high throughput on large heap JVM, the duration and frequency of the garbage collection cycles becomes as critical as the code.In order to manage GC, it is essential to have adequate monitoring tools. These are discussed below…
 
 ###The theory
+
+####Single measurement
+First, let’s consider the simplified case where GC is extremely stable and all GCs occur at fixed regular intervals and each last exactly the same time. This is illustrated in Figure 13.
+ 
+![Figure 13](https://cloud.githubusercontent.com/assets/7895210/8338059/4c089444-1a63-11e5-8741-f3f1517f4d92.jpg)
+####Figure 13 GC measurement: single measurement
+
+Now, consider the single cycle highlighted. We can define the following variables:
+* T(Cycle		Duration of a single cycle (30 seconds)
+* T(Pause)	Duration of a single pause (60 ms)
+* T(Clock)		Duration of the GC, based on a wall clock
+* Count		Count of GC during the interval of interest (obviously 1 during a single cycle)
+
+	Note	Some GC algorithms (collectors) always have T(Pause) =
+	    T(Clock) (e.g. Parallel) while others (e.g. G1) will have T(Pause) < T(Clock).
+
+Finally, we can calculate the fraction of the time spent in a GC pause (and therefore not running user code), DutyCycle(GC), as
+
+	DutyCycle(GC)=  (T(Pause))/(T(Cycle))*100%
+
+Applying this equation to the single cycle GC # 2 gives
+
+	DutyCycle(GC)=  (60 ms)/(4 sec)*100%=  (60 ms)/(4,000 ms)*100%=1.5%
+
+This means, in the example, that the JVM spends 1.5% of its time paused to performed garbage collection and 98.5% of its time running user code.
+
+There is more. The collection took a total of 1.2 second. This means that some number of threads was running in parallel to the user code performing some garbage collection task during those 1.2 seconds, T(Clock).
+
+A full cycle can now divided in three phases , as illustrated in Figure 14:
+* GC Pause: During this phase, only GC runs and the user code is halted. The limiting factor here is related to the SLA of the relevant service (e.g. Trellis). For the fraction of requests that arrive during a GC (this was 1.5% in the example above), what is the degradation in response time you and your customers are willing to accept?
+* GC Concurrent: Here, both GC and user code are running. This implies that some of the processing power available on the server (i.e. cores, memory bandwidth) is used for the garbage collection tasks and is not available to the user code. Unless the servers are running extremely hot, GC concurrent typically does not cause significant problems.
+* User code: The objective is always to optimize the time spent in this mode. However, in a machine running hot, a high rate of allocation of short-lived object will drive the time spent in GC.
+ 
+![Figure 14](https://cloud.githubusercontent.com/assets/7895210/8338058/4c0865fa-1a63-11e5-9b35-a73de073252a.jpg)
+####Figure 14 Three phases of a single GC cycle
+
+The first step in “tuning” GC is finding the proper collector configuration for the memory utilization pattern of your application. Next comes the trade-off between minimizing DutyCycle(GC) and T(Pause). Typically, improving degrades the other and one must find a reasonable balance.
