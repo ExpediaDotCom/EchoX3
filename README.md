@@ -313,7 +313,9 @@ The client interface is extremely simple, by design…
 
 The first entry point is used to obtain a client instance object. Note that the instance is a singleton. There are two singleton within the system, one for local and one for remote. In a typical scenario, one may choose to use the local mode for early debugging and switch to remote (100% compatible) for integrated testing and production. In a more complex scenario, both may be used for different named objects. Of course, the use of both concurrently is supported.
 * Factory.getInstance().getSimpleClient (Boolean isLocal)
+
     or
+
     Factory.getInstance().getObjectClient (Boolean isLocal)
 
 The next call tells the system which named cache you want to use. Multiple calls can be made to access multiple named caches.
