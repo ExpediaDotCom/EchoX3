@@ -98,25 +98,25 @@ The server on the other hand runs independently of user code and does not have t
 ##HelloSimple.java
 Within **EchoX3**, the first step is always to obtain the factory object.
 
-	IClientFactory	factory	= ClientFactory.getInstance();
+		IClientFactory	factory	= ClientFactory.getInstance();
 
 When operating in local mode, it is necessary to tell **EchoX3** how to configure the cache(s) that will be used. It is recommended that the call to putLocalConfiuration() be made in all cases, as it facilitate the switching between local and remote mode.
 
-	// Set the configuration file for this cache, required only in local.
-	URL			url		= ClassLoader.getSystemResource(FILE_NAME);
-	factory.putLocalConfiguration(CACHE_NAME, url);
+		// Set the configuration file for this cache, required only in local.
+		URL			url		= ClassLoader.getSystemResource(FILE_NAME);
+		factory.putLocalConfiguration(CACHE_NAME, url);
 
 Next, the admin client is used to connect to the cache. This is required in either Local or Remote mode. 
 
-	// Create the local cache; or connect to the remote cache; always required
-	IAdminClient		admin		= factory.getAdminClient(ClientType.Local);
-	admin.connectToCache(CACHE_NAME);
+		// Create the local cache; or connect to the remote cache; always required
+		IAdminClient		admin		= factory.getAdminClient(ClientType.Local);
+		admin.connectToCache(CACHE_NAME);
 
 The simple cache client can now be used for put and get operations.
 
-	ISimpleCacheClient	client		=factory.getSimpleClient(ClientType.Local);
-	client.put(CACHE_NAME, KEY, VALUE);
-	Serializable		back		= client.get(CACHE_NAME, KEY);
+		ISimpleCacheClient	client		=factory.getSimpleClient(ClientType.Local);
+		client.put(CACHE_NAME, KEY, VALUE);
+		Serializable		back		= client.get(CACHE_NAME, KEY);
 
 ##HelloObject.java
 The first few steps required in object mode are identical to simple mode. The only difference is the name of the file containing the configuration.
@@ -129,22 +129,22 @@ How do object get put in the object cache?
 
 Objects are actually never put in an object cache by the user’s code. The client API only supports writeOnly() and readOnly(); not put. How do objects get created? Blank objects are created using the factory class specified in the configuration file when a key corresponds to an object that does not exists in the cache. Upon a write operation, rather than returning “not found”, the object cache will create a blank object and pass the write operation to the newly created object.
 
-	IObjectCacheClient	client		= factory.getObjectClient(ClientType.Local);
-	byte[]			bytes		= VALUE.getBytes(Charset.defaultCharset());
-	TestWriteRequest	writeRequest	= new TestWriteRequest(0, 0, false, bytes);
-	client.writeOnly(CACHE_NAME, KEY, writeRequest);
+		IObjectCacheClient	client		= factory.getObjectClient(ClientType.Local);
+		byte[]			bytes		= VALUE.getBytes(Charset.defaultCharset());
+		TestWriteRequest	writeRequest	= new TestWriteRequest(0, 0, false, bytes);
+		client.writeOnly(CACHE_NAME, KEY, writeRequest);
 
 And the read request takes a readRequest to return a readResponse.
 
-	TestReadRequest	readRequest	= new TestReadRequest(0, 0, false);
-	Serializable		response	= client.readOnly(CACHE_NAME, KEY, readRequest);
-	TestReadResponse	readResponse	= (TestReadResponse) response;
-	byte[]			backBytes	= readResponse.getBytes();
-	String			back		= new String(backBytes,Charset.defaultCharset());
+		TestReadRequest	readRequest	= new TestReadRequest(0, 0, false);
+		Serializable		response	= client.readOnly(CACHE_NAME, KEY, readRequest);
+		TestReadResponse	readResponse	= (TestReadResponse) response;
+		byte[]			backBytes	= readResponse.getBytes();
+		String			back		= new String(backBytes,Charset.defaultCharset());
 
 ##Hello EchoX3 server
 
-	[[[TODO]]]
+		[[[TODO]]]
 
 #Writing a EchoX3 application
 
@@ -175,16 +175,16 @@ The core of the application is the SmartCache object. In this case, to be fully 
 ###Member variables
 The member variables for SmartCacheObject become the array version of the member variables for SimpleCacheObject, as illustrated in Figure 6.
 
-	public class SmartCacheObject implements ITrellisCacheObject
-	{
-		private TrellisSimpleCacheStatusHolder		m_cacheStatus;
+		public class SmartCacheObject implements ITrellisCacheObject
+		{
+			private TrellisSimpleCacheStatusHolder		m_cacheStatus;
 
-		private byte[][]	m_dataList			= new byte[256][];
-		private long[]	m_writeTimeListMS		= new long[256];
-		private long[]	m_readTimeListMS		= new long[256];
-		private long[]	m_expirationTimeListMS	= new long[256];
+			private byte[][]	m_dataList			= new byte[256][];
+			private long[]	m_writeTimeListMS		= new long[256];
+			private long[]	m_readTimeListMS		= new long[256];
+			private long[]	m_expirationTimeListMS	= new long[256];
 
-	}
+		}
 <p><i><b>Figure 6 Member variables for SmartCache</b></i></p>
 
 The member variable m_cacheStatus matches same in SimpleCache and maintains the configuration data along with counters. Each object has a pointer to the object owned by the factory associated with the named cache.
@@ -242,7 +242,7 @@ The client wrapper acts as a simplification agent between the clients of the **E
 
 For SmartCache, the obvious and simplest approach is to expose the same API as is used for the **EchoX3** SimpleCache: ISimpleCacheClient:
 
-		class SmartCacheClient implements ITrellisSimpleCacheClient
+			class SmartCacheClient implements ITrellisSimpleCacheClient
 
 ##Request Objects
 There are several approaches possible to the complexity of the request objects. Remember that they are full-fledged Java objects that will exist on the server. At the simple end, they are POJO used by the cache object to determine the request and request parameters. At the more complex end, they can contain the algorithm to run on the cache object’s data.
@@ -251,11 +251,11 @@ For SmartCache, the simplicity of the problem lends itself towards the POJO end 
 ###SmartCacheRequest
 The plain SmartCacheRequest is used in both Read and Write mode and is the class that understand how to parse the key to extract the bytes corresponding to the object’s key and the byte corresponding to the array index for the element within the cache object.
 
-	public class SmartCacheRequest implements Serializable
-	{
-		private transient byte[]		m_objectKey;
-		private int				m_index;
-	}
+		public class SmartCacheRequest implements Serializable
+		{
+			private transient byte[]		m_objectKey;
+			private int				m_index;
+		}
 
 <p><i><b>Figure 10 Fields of SmartCacheRequest</b></i></p>
 
@@ -264,10 +264,10 @@ This class serves multiple purposes as it not only act as a base class for Smart
 ###WriteRequest
 The write request extends SmartCacheRequest, adding the byte[] corresponding to the value to be stored (see Figure 11).
 
-	public class SmartCacheWriteRequest extends SmartCacheRequest
-	{
-		private byte[]		m_value;
-	}
+		public class SmartCacheWriteRequest extends SmartCacheRequest
+		{
+			private byte[]		m_value;
+		}
 
 <p><i><b>Figure 11 Fields of SmartCacheWriteRequest</b></i></p>
 
