@@ -343,3 +343,22 @@ The “connect*” family of calls cause the client to connect to a director on 
 Internally, the client library establishes a connection to each server/director and builds a load balancing sequence.
  
 In local mode, other calls are simply passed to the local server. The discussion below applies only to the remote mode.
+
+###Get: Remote mode (Steps 3-6 in Figure 12)
+When the client calls get(name, key), the call is directed to one of the servers in the list given to the client for that name, based on the load balancing algorithm (discussed in details below). On the server, the request is received by the transport layer which immediately passes it to the director. Technically, the client does not know the difference between a “server” and a “director’. However, this difference is crucial to us.
+The director is the brains of the operation. It manages the routing table, uses it to service the client’s requests, including reverting to redundant servers when a failure occurs in the middle of an operation.
+
+Using the key, the director determines which server to query and passes the request to the server. This is done asynchronously (java.nio). When the response comes back from the server, the director composes an appropriate response for the client (e.g. merging responses from multiple servers in the case of a bulk operation) and passes it to the transport layer for transmission.
+
+The server’s role in this is fairly straightforward: Receive get/put, process it, and send response to director.
+
+In the general case, the ratio of reads to writes is not known (e.g. to the items in a bin) and must be assumed to be variable between the extremes. In these situations, the simple synchronized can be used as it is known to be more efficient when a mix of reads and writes occur.
+
+This project does NOT use the standard Java ReadWriteLocks are they are known to perform poorly when contention is present (e.g. 10x slower). The alternate MagicReadWriteLock is used in place.
+
+#Monitoring (aka counting beans)
+
+##Garbage collection
+When asked what I do for a living, I could easily say I work in garbage. For EchoX3 to maintain its record of 99% of the requests faster than X ms, it is not sufficient to write good (great) code. The garbage collection beast must be tamed. When operating at high throughput on large heap JVM, the duration and frequency of the garbage collection cycles becomes as critical as the code.In order to manage GC, it is essential to have adequate monitoring tools. These are discussed below…
+
+###The theory
