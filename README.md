@@ -241,4 +241,4 @@ The client wrapper acts as a simplification agent between the clients of the Ech
 Figure 9 Client wrapper interfaces
 
 For SmartCache, the obvious and simplest approach is to expose the same API as is used for the Trellis SimpleCache: ISimpleCacheClient:
-	class SmartCacheClient implements ITrellisSimpleCacheClient
+		class SmartCacheClient implements ITrellisSimpleCacheClient
