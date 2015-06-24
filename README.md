@@ -24,10 +24,10 @@ Guiding principles are guidelines to be used when making decision; they are tie 
 ##What does **EchoX3** do?
 **EchoX3** is a distributed object cache. The cache contains real objects (not byte[]). As the client makes calls to write new data to the object, it updates itself. During a read call, the object may return stored values or perform calculations and return the results of the calculations. The key is that a true object resides in the cache that can perform operations in-place.
 When the client performs a call (see Figure 1), the **EchoX3** system uses the cache name and the key to find the object. The client’s request is then passed to the object (Figure 2).
-![Figure 1 - System overview: Routing](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
-####Figure 1 - System overview: Routing
-![Figure 2 - System overview: Client request to cache object](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
-####Figure 2 - System overview: Client request to cache object
+![Figure 1 System overview: Routing](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
+####Figure 1 System overview: Routing
+![Figure 2 System overview: Client request to cache object](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
+####Figure 2 System overview: Client request to cache object
 To simplify the development effort, a number of logistics tasks are handled automatically by the **EchoX3** system:
 
 * Connection management
@@ -149,8 +149,8 @@ And the read request takes a readRequest to return a readResponse.
 ##Writing a EchoX3 application
 
 Figure 3 illustrates the various components of a typical trellis application. In this section, we will build a complete EchoX3 application named SmartCache (included in the EchoX3 distribution).
-![Figure 3 - Trellis application components](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
-####Figure 3 - Trellis application components
+![Figure 3 Trellis application components](https://cloud.githubusercontent.com/assets/7895210/8338054/4bf62cdc-1a63-11e5-8b8f-1e6b7fbfbe7e.jpg)
+####Figure 3 Trellis application components
 
 ##SmartCache design
 There is a cost to each item placed in a (simple or object) cache. Sometimes, the right conditions are present where this cost can be minimized. SmartCache is a simple cache that minimizes this cost when the following conditions are present:
@@ -158,12 +158,39 @@ There is a cost to each item placed in a (simple or object) cache. Sometimes, th
 * The keys are composed in such a way that several items have the same key up to the last byte (You should use byte[] as keys. The API supports Serializable; however, byte[] are not compressed and essentially kept intact, as is required for this scheme.)
 
 For example, the set of 4 bytes keys illustrated in Figure 4 matches condition 2.
-![Figure 4 - Keys matching condition for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338049/4bf26200-1a63-11e5-819f-7ca54a884073.jpg)
-####Figure 4 - Keys matching condition for SmartCache
+![Figure 4 Keys matching condition for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338049/4bf26200-1a63-11e5-819f-7ca54a884073.jpg)
+####Figure 4 Keys matching condition for SmartCache
 
 If both conditions are met, then significant memory reduction can be obtained. In the example of Figure 4, there are 11 entries, corresponding to 11 entries in SimpleCache. With SmartCache, this will be reduced to only 3 larger entries, where only the first 3 bytes of the key are used as key into the ObjectCache and the fourth byte is used to index into an array internal to the ObjectCache SmartCache object where the values are stored, as illustrated in Figure 5.
  
-![Figure 5 - Splitting of the key for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338051/4bf488e6-1a63-11e5-992b-0990aadb1697.jpg)
-####[Figure 5 - Splitting of the key for SmartCache
+![Figure 5 Splitting of the key for SmartCache components](https://cloud.githubusercontent.com/assets/7895210/8338051/4bf488e6-1a63-11e5-992b-0990aadb1697.jpg)
+####Figure 5 Splitting of the key for SmartCache
 
 SmartCache will implement exactly the ITrellisSimpleCacheClient interface. However, using its own optimized way of storing the data, it will be more memory efficient.
+
+##SmartCacheObject implements ICacheObject
+The core of the application is the SmartCache object. In this case, to be fully compatible with the regular SimpleCache, SmartCache needs to support expiration based on TimeWrite or TimeRead. This means we need to maintain an m_lastWrite and m_lastRead for each entry in addition to the m_data.
+
+##Member variables
+The member variables for SmartCacheObject become the array version of the member variables for SimpleCacheObject, as illustrated in Figure 6.
+
+	public class SmartCacheObject implements ITrellisCacheObject
+	{
+		private TrellisSimpleCacheStatusHolder		m_cacheStatus;
+
+		private byte[][]	m_dataList			= new byte[256][];
+		private long[]	m_writeTimeListMS		= new long[256];
+		private long[]	m_readTimeListMS		= new long[256];
+		private long[]	m_expirationTimeListMS	= new long[256];
+
+	}
+####Figure 6 Member variables for SmartCache
+
+The member variable m_cacheStatus matches same in SimpleCache and maintains the configuration data along with counters. Each object has a pointer to the object owned by the factory associated with the named cache.
+
+Appropriate getters are available on each of these member variables so they can be stolen by a later release of SmartCacheObject for in-place upgrade via the method upgradeClass() of the v2 (or v1.1) new object/class.
+
+The readOnly() and writeOnly() method will be dealt with in the section on request below. The remaining ITrellisCacheObject methods are discussed here.
+
+##Constructor
+Following the pattern of TrellisSimpleCacheObject, the constructor takes the TrellisSimpleCacheStatusHolder and keeps a pointer to the master owned by the factory object. After final construction, all data is initialized to null.
