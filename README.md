@@ -25,7 +25,7 @@ Guiding principles are guidelines to be used when making decision; they are tie 
 **EchoX3** is a distributed object cache. The cache contains real objects (not byte[]). As the client makes calls to write new data to the object, it updates itself. During a read call, the object may return stored values or perform calculations and return the results of the calculations. The key is that a true object resides in the cache that can perform operations in-place.
 When the client performs a call (see Figure 1), the **EchoX3** system uses the cache name and the key to find the object. The client’s request is then passed to the object (Figure 2).
 ![Figure 1](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
-####	Figure 1 System overview: Routing
+####Figure 1 System overview: Routing
 ![Figure 2](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
 ####Figure 2 System overview: Client request to cache object
 To simplify the development effort, a number of logistics tasks are handled automatically by the **EchoX3** system:
@@ -217,3 +217,19 @@ In the case of SimpleCache or SmartCache, this is straight forward as the read a
  
 ![Figure 8](https://cloud.githubusercontent.com/assets/7895210/8338050/4bf44db8-1a63-11e5-912b-1093ad150378.jpg)
 ####Figure 8 Adjusting read/write time for soft flush in SimpleCache and SmartCache
+
+##void doMaintenance(int memoryLevelPercent)
+The method doMaintenance is where the object cleans itself. In the case of a SmartCache, it will go through each of its item and delete (nullify) each expired item.
+
+The parameter memoryLevelPercent indicates the level of memory pressure under which the system is currently operating. In other words, this is the percent of normal memory the application should use. When the number is below 100, a well-behaved application should reduce its memory requirement.
+
+In the cache of a standard caching application with a time-to-live (TTL), there is an obvious way to use this parameter. The configuration TTL is multiplied by the memoryLevelPercent (TTL * memoryLevelPercent / 100) to obtain the effective TTL and the effective TTL is used. 
+
+The configuration parameters MaintenancePeriodNumber and MaintenancePeriodUnits are used to configure on a per named cache basis how often this method is called.
+
+##Boolean canDelete()
+This method is called after every operation which can modify the object (doMaintenance and writeOnly). Trellis is asking the object is it can be deleted. For SmartCache, the answer is yes when all elements of the data list are null.
+
+For SmartCache, there are two ways of implementing this method
+* Walk the list until a non-null is found (return false) or the end of list is found (return true)
+* Keep a count of non-null elements and return count == 0
