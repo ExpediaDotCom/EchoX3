@@ -24,9 +24,9 @@ Guiding principles are guidelines to be used when making decision; they are tie 
 ##What does **EchoX3** do?
 **EchoX3** is a distributed object cache. The cache contains real objects (not byte[]). As the client makes calls to write new data to the object, it updates itself. During a read call, the object may return stored values or perform calculations and return the results of the calculations. The key is that a true object resides in the cache that can perform operations in-place.
 When the client performs a call (see Figure 1), the **EchoX3** system uses the cache name and the key to find the object. The client’s request is then passed to the object (Figure 2).
-![Figure 1 System overview: Routing](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
+![Figure 1](https://cloud.githubusercontent.com/assets/7895210/8338052/4bf4f3a8-1a63-11e5-9437-1f857309b363.jpg)
 ####Figure 1 System overview: Routing
-![Figure 2 System overview: Client request to cache object](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
+![Figure 2](https://cloud.githubusercontent.com/assets/7895210/8338053/4bf509f6-1a63-11e5-8a0c-1250469902e6.jpg)
 ####Figure 2 System overview: Client request to cache object
 To simplify the development effort, a number of logistics tasks are handled automatically by the **EchoX3** system:
 
@@ -194,3 +194,25 @@ The readOnly() and writeOnly() method will be dealt with in the section on reque
 
 ##Constructor
 Following the pattern of TrellisSimpleCacheObject, the constructor takes the TrellisSimpleCacheStatusHolder and keeps a pointer to the master owned by the factory object. After final construction, all data is initialized to null.
+
+##void updateConfiguration(TrellisCacheConfiguration configuration)
+This method is called on existing objects to inform them that the configuration has changed. The factory is always called first (guaranteed by Trellis). This means that the m_cacheStatus has been updated before this call. The parameter configuration is ignored and m_expirationTimeListMS is updated for the new configuration.
+
+##void flush(long timeNowMS, long timeFlushMS)
+Flush can be a dangerous call in a conventional system. The problem is that, immediately after the flush, there are no entries in the cache and every call is a miss. A simplistic application using caching is illustrated in Figure 7.
+
+		Foo		foo	= cache.get(key);
+		if (null == foo)
+		{
+			foo = backend.computeFoo(...);
+			cache.put(key, foo);
+		}
+		// Use the value of foo
+####Figure 7 Simple application using cache
+
+After a flush, every call will go to the backend and risks overloading it. To avoid this load spike on the backend, Trellis supports a soft-flush. The flush is spread over N milli-seconds. The client API for flush takes the parameter flushDurationMS. On each server, Trellis utilizes a linear function to distribute the flush time of each object over the flush duration. Trellis then immediately tells each object at which time it should flush itself. It is the responsibility of the object to determine based on its own semantics how it wants to proceed.
+
+In the case of SimpleCache or SmartCache, this is straight forward as the read and write times can be adjusted to ensure the object does not live beyond the scheduled flush time. For each other class of object, the details may be different, up to and including some object that will ignore the call and some object that will ignore the parameter timeFlushMS and flush themselves immediately. That part belongs to the owner (writer/coder) of the object.
+ 
+![Figure 8](https://cloud.githubusercontent.com/assets/7895210/8338050/4bf44db8-1a63-11e5-912b-1093ad150378.jpg)
+####Figure 8 Adjusting read/write time for soft flush in SimpleCache and SmartCache
