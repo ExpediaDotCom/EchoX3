@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.expedia.echox3.sample.hello</groupId>
+	<artifactId>EchoX3-Sample-Hello</artifactId>
+	<packaging>jar</packaging>
+
+	<name>EchoX3-Sample-Hello</name>
+	<description>TODO TODO</description>
+	<inceptionYear>2015</inceptionYear>
+
+	<organization>
+		<name>Expedia</name>
+		<url>http://www.expedia.com/</url>
+	</organization>
+
+	<parent>
+		<groupId>com.expedia.echox3.sample</groupId>
+		<artifactId>EchoX3-Sample</artifactId>
+		<relativePath>..</relativePath>
+		<version>${project.version}</version>
+	</parent>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.expedia.echox3.client</groupId>
+			<artifactId>EchoX3-Client</artifactId>
+			<version>${project.version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j-version}</version>
+		</dependency>
+
+	</dependencies>
+
+</project>

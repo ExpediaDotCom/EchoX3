@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>EchoX3-Sample</name>
+	<artifactId>EchoX3-Sample</artifactId>
+	<groupId>com.expedia.echox3.sample</groupId>
+	<version>0.1.0</version>
+	<packaging>pom</packaging>
+
+	<organization>
+		<name>Expedia</name>
+		<url>http://www.expedia.com/</url>
+	</organization>
+
+	<parent>
+		<groupId>com.expedia.echox3</groupId>
+		<artifactId>EchoX3</artifactId>
+		<relativePath>..</relativePath>
+		<version>${project.version}</version>
+	</parent>
+
+	<!-- List of child module IDs -->
+	<modules>
+		<module>Hello</module>
+	</modules>
+
+	</project>

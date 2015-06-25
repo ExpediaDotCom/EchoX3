@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.expedia.echox3.client</groupId>
+	<artifactId>EchoX3-Client</artifactId>
+	<packaging>jar</packaging>
+
+	<name>EchoX3Client</name>
+	<description>Public API and everything required to run in local mode</description>
+	<inceptionYear>2015</inceptionYear>
+
+	<organization>
+		<name>Expedia</name>
+		<url>http://www.expedia.com/</url>
+	</organization>
+
+	<parent>
+		<groupId>com.expedia.echox3</groupId>
+		<artifactId>EchoX3</artifactId>
+		<relativePath>..</relativePath>
+		<version>${project.version}</version>
+	</parent>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
