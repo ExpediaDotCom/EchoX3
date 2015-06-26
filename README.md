@@ -25,7 +25,7 @@
 * The “hold my beer a moment, I want to try something” Principal.
 * It Only Hurts if You Don't Run Fast Enough.
 
-#EchoX3 Guiding design principles
+#EchoX3 *(Guiding design principles)*
 Guiding principles are guidelines to be used when making decision; they are tie breakers; they make the difference between a bug being marked “Won’t fix”, “Postponed” and “Must fix”.
 
 * If you are counting milliseconds, you are already too slow!
