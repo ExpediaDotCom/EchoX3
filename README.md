@@ -6,6 +6,8 @@
 * The operations team who receives a high-reliability, easy to manage system
 * The management team who has to make the easy decision to choose **EchoX3**
 
+#Dev Instructions
+
 ##Guiding design principles
 Guiding principles are guidelines to be used when making decision; they are tie breakers; they make the difference between a bug being marked “Won’t fix”, “Postponed” and “Must fix”.
 
