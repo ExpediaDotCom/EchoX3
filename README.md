@@ -11,12 +11,15 @@
 * Animal Sacrifices
 * Phase of the Moon
 * Wind Direction
+
 ###Building the Project
 * Winding the Rubber Band
 * Pushing the Keys Hard Enough
+
 ###Tests
 * Prove the Existence of Life on Other Planets
 * Prevent Universal Entropy
+
 ###Running Examples
 * The Value of Ointments
 * The “hold my beer a moment, I want to try something” Principal.
