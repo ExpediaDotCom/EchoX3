@@ -441,7 +441,14 @@ The project uses the following tools for development.  The rest of this develope
 
 ##Building
 
-EchoX3 builds using Maven from the root of the project.
+EchoX3 builds using Maven from the root of the project.  This is the directory containing the root POM.MXL file for the project.  
+
+The root POM.XML file  should contain the following identifiers:
+```
+<name>EchoX3</name>
+<groupId>com.expedia.echox3</groupId>
+<artifactId>EchoX3</artifactId>
+```
 
 Compile source files and run tests
 
@@ -457,9 +464,14 @@ mvn package
 
 ##Tests
 
-Tests will be automatically run by Maven when building.
+Tests will be automatically run by Maven when building.  Tests may be disabled for convenience by commenting out the appropriate line in the root POM.XML (or disabled on a per-project basis by adding a similar line to any sub-project's POM.XML).
+
+```
+<properties>
+  <!-- Uncomment this line to skip tests when building -->
+  <maven.test.skip>true</maven.test.skip>
+```
 
 ##Running Examples
 
 (forthcoming)
-
