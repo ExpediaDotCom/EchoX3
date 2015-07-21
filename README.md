@@ -428,3 +428,38 @@ The MBean are the objects visible in JMX. The classes described below measure th
 
 ###The classes
 For programmers who want to expose this information in their application.
+
+# Development Guide
+
+This section is for developers intending to contribute to the project.  
+
+The project uses the following tools for development.  The rest of this developer guide will assume these tools are installed in the development environment.
+
+* Apache Maven 3.3.3
+* IntelliJ Idea 14.0.2 (optional)
+* Other Java IDEs (forthcoming)
+
+##Building
+
+EchoX3 builds using Maven from the root of the project.
+
+Compile source files and run tests
+
+```
+mvn compile
+```
+
+Create build artifacts (jars and other output artifacts)
+
+```
+mvn package
+```
+
+##Tests
+
+Tests will be automatically run by Maven when building.
+
+##Running Examples
+
+(forthcoming)
+
