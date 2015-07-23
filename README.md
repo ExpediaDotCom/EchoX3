@@ -431,7 +431,7 @@ For programmers who want to expose this information in their application.
 
 # Development Guide
 
-This section is for developers intending to contribute to the project.  
+This section is for developers intending to contribute to the project.  It covers the mechanics of working with the project such as building, running tests, and running samples.  It doesn't cover best coding practices, style, design philosophy, etc.
 
 The project uses the following tools for development.  The rest of this developer guide will assume these tools are installed in the development environment.
 
@@ -462,7 +462,7 @@ Create build artifacts (jars and other output artifacts)
 mvn package
 ```
 
-##Tests
+Build-Time Tests
 
 Tests will be automatically run by Maven when building.  Tests may be disabled for convenience by commenting out the appropriate line in the root POM.XML (or disabled on a per-project basis by adding a similar line to any sub-project's POM.XML).
 
@@ -472,6 +472,9 @@ Tests will be automatically run by Maven when building.  Tests may be disabled f
   <maven.test.skip>true</maven.test.skip>
 ```
 
-##Running Examples
+##IDE Support
 
-(forthcoming)
+###IntelliJ Idea
+###Eclipse
+
+##Examples
