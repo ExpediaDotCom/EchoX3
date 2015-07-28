@@ -435,9 +435,9 @@ This section is for developers intending to contribute to the project.  It cover
 
 The project uses the following tools for development.  The rest of this developer guide will assume these tools are installed in the development environment.
 
-* Apache Maven 3.3.3
-* IntelliJ Idea 14.0.2 (optional)
-* Other Java IDEs (forthcoming)
+* Java JDK 1.8.0_x
+* Apache Maven 3.3.3 or later
+* IntelliJ Idea 14 (optional)
 
 ##Building
 
