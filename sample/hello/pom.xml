@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 
 	<name>EchoX3-Sample-Hello</name>
-	<description>TODO TODO</description>
+	<description>Examples for use of EchoX3 client APIs</description>
 	<inceptionYear>2015</inceptionYear>
 
 	<organization>
@@ -18,15 +18,15 @@
 		<groupId>com.expedia.echox3.sample</groupId>
 		<artifactId>EchoX3-Sample</artifactId>
 		<relativePath>..</relativePath>
-		<version>${project.version}</version>
+		<version>0.1.0</version>
 	</parent>
 
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>com.expedia.echox3.client</groupId>
 			<artifactId>EchoX3-Client</artifactId>
-			<version>${project.version}</version>
+			<version>0.1.0</version>
 			<type>jar</type>
 		</dependency>
 

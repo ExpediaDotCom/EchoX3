@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+    <output url="file://$output.root$/EchoX3-Sample/classes" />
+    <output-test url="file://$output.root$/EchoX3-Sample/test-classes" />
+    <content url="file://$MODULE_DIR$/../sample">
+      <excludeFolder url="file://$MODULE_DIR$/../sample/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

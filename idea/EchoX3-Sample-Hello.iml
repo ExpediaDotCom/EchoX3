@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+    <output url="file://$output.root$/EchoX3-Sample-Hello/classes" />
+    <output-test url="file://$output.root$/EchoX3-Sample-Hello/test-classes" />
+    <content url="file://$MODULE_DIR$/../sample/hello">
+      <sourceFolder url="file://$MODULE_DIR$/../sample/hello/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../sample/hello/src/main/resources" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/../sample/hello/${project.build.directory}/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../sample/hello/${project.build.directory}/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../sample/hello/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="EchoX3-Client" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
+  </component>
+</module>

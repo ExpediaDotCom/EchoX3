@@ -106,7 +106,7 @@ When operating in local mode, it is necessary to tell **EchoX3** how to configur
 		URL			url		= ClassLoader.getSystemResource(FILE_NAME);
 		factory.putLocalConfiguration(CACHE_NAME, url);
 
-Next, the admin client is used to connect to the cache. This is required in either Local or Remote mode. 
+Next, the admin client is used to connect to the cache. This is required in either Local or Remote mode.
 
 		// Create the local cache; or connect to the remote cache; always required
 		IAdminClient		admin		= factory.getAdminClient(ClientType.Local);
@@ -163,7 +163,7 @@ For example, the set of 4 bytes keys illustrated in Figure 4 matches condition 2
 <p><i><b>Figure 4 Keys matching condition for SmartCache</b></i></p>
 
 If both conditions are met, then significant memory reduction can be obtained. In the example of Figure 4, there are 11 entries, corresponding to 11 entries in SimpleCache. With SmartCache, this will be reduced to only 3 larger entries, where only the first 3 bytes of the key are used as key into the ObjectCache and the fourth byte is used to index into an array internal to the ObjectCache SmartCache object where the values are stored, as illustrated in Figure 5.
- 
+
 ![Figure 5](https://cloud.githubusercontent.com/assets/7895210/8338051/4bf488e6-1a63-11e5-992b-0990aadb1697.jpg)
 <p><i><b>Figure 5 Splitting of the key for SmartCache</b></i></p>
 
@@ -214,7 +214,7 @@ Flush can be a dangerous call in a conventional system. The problem is that, imm
 After a flush, every call will go to the backend and risks overloading it. To avoid this load spike on the backend, **EchoX3** supports a soft-flush. The flush is spread over N milli-seconds. The client API for flush takes the parameter flushDurationMS. On each server, **EchoX3** utilizes a linear function to distribute the flush time of each object over the flush duration. **EchoX3** then immediately tells each object at which time it should flush itself. It is the responsibility of the object to determine based on its own semantics how it wants to proceed.
 
 In the case of SimpleCache or SmartCache, this is straight forward as the read and write times can be adjusted to ensure the object does not live beyond the scheduled flush time. For each other class of object, the details may be different, up to and including some object that will ignore the call and some object that will ignore the parameter timeFlushMS and flush themselves immediately. That part belongs to the owner (writer/coder) of the object.
- 
+
 ![Figure 8](https://cloud.githubusercontent.com/assets/7895210/8338050/4bf44db8-1a63-11e5-912b-1093ad150378.jpg)
 <p><i><b>Figure 8 Adjusting read/write time for soft flush in SimpleCache and SmartCache</b></i></p>
 
@@ -223,7 +223,7 @@ The method doMaintenance is where the object cleans itself. In the case of a Sma
 
 The parameter memoryLevelPercent indicates the level of memory pressure under which the system is currently operating. In other words, this is the percent of normal memory the application should use. When the number is below 100, a well-behaved application should reduce its memory requirement.
 
-In the cache of a standard caching application with a time-to-live (TTL), there is an obvious way to use this parameter. The configuration TTL is multiplied by the memoryLevelPercent (TTL * memoryLevelPercent / 100) to obtain the effective TTL and the effective TTL is used. 
+In the cache of a standard caching application with a time-to-live (TTL), there is an obvious way to use this parameter. The configuration TTL is multiplied by the memoryLevelPercent (TTL * memoryLevelPercent / 100) to obtain the effective TTL and the effective TTL is used.
 
 The configuration parameters MaintenancePeriodNumber and MaintenancePeriodUnits are used to configure on a per named cache basis how often this method is called.
 
@@ -236,7 +236,7 @@ For SmartCache, there are two ways of implementing this method
 
 ##Client wrapper implements ISimpleCacheClient
 The client wrapper acts as a simplification agent between the clients of the **EchoX3** application and the **EchoX3** system. To its clients, the wrapper exposes a simple interface in clients “units”. For example, the SmartCache exposes a plain cache interface. The implementation details are hidden from the clients. The wrapper takes in requests and translates them into **EchoX3** calls, either to the SimpleCache or to the ObjectCache, as is appropriate. In a more advanced scenario, a wrapper’s single entry point could require multiple calls to perform its task before returning to the caller.
- 
+
 ![Figure 9](https://cloud.githubusercontent.com/assets/7895210/8338057/4c06ccfe-1a63-11e5-8ecc-8ed4cd153b45.jpg)
 <p><i><b>Figure 9 Client wrapper interfaces</b></i></p>
 
@@ -341,7 +341,7 @@ Calls to conectoBlobCache and connectToObjectCache will actually create the Blob
 The “connect*” family of calls cause the client to connect to a director on the system. Any director will do. The remote server is queried for the list of servers responsible for the name supplied (Steps 1 and 2 in Figure 12). Unbeknownst to the client, this is the list of servers in the cluster containing the named BlobCache or ObjectCache, on which the clients will be able to talk to the servers.
 
 Internally, the client library establishes a connection to each server/director and builds a load balancing sequence.
- 
+
 In local mode, other calls are simply passed to the local server. The discussion below applies only to the remote mode.
 
 ###Get: Remote mode (Steps 3-6 in Figure 12)
@@ -365,7 +365,7 @@ When asked what I do for a living, I could easily say I work in garbage. For **E
 
 ####Single measurement
 First, let’s consider the simplified case where GC is extremely stable and all GCs occur at fixed regular intervals and each last exactly the same time. This is illustrated in Figure 13.
- 
+
 ![Figure 13](https://cloud.githubusercontent.com/assets/7895210/8338059/4c089444-1a63-11e5-8741-f3f1517f4d92.jpg)
 <p><i><b>Figure 13 GC measurement: single measurement</b></i></p>
 
@@ -394,15 +394,15 @@ A full cycle can now divided in three phases , as illustrated in Figure 14:
 * GC Pause: During this phase, only GC runs and the user code is halted. The limiting factor here is related to the SLA of the relevant service (e.g. **EchoX3**). For the fraction of requests that arrive during a GC (this was 1.5% in the example above), what is the degradation in response time you and your customers are willing to accept?
 * GC Concurrent: Here, both GC and user code are running. This implies that some of the processing power available on the server (i.e. cores, memory bandwidth) is used for the garbage collection tasks and is not available to the user code. Unless the servers are running extremely hot, GC concurrent typically does not cause significant problems.
 * User code: The objective is always to optimize the time spent in this mode. However, in a machine running hot, a high rate of allocation of short-lived object will drive the time spent in GC.
- 
+
 ![Figure 14](https://cloud.githubusercontent.com/assets/7895210/8338058/4c0865fa-1a63-11e5-9b35-a73de073252a.jpg)
 <p><i><b>Figure 14 Three phases of a single GC cycle</b></i></p>
 
 The first step in “tuning” GC is finding the proper collector configuration for the memory utilization pattern of your application. Next comes the trade-off between minimizing DutyCycle(GC) and T(Pause). Typically, improving degrades the other and one must find a reasonable balance.
 
 ####Average measurement
-In practice, GCs do not occur at exactly fixed intervals and do not always take the same amount of time … but they are in the same ballpark. What counts is that they do not vary widely. They are close enough that working with averages is sufficient for our needs. 
- 
+In practice, GCs do not occur at exactly fixed intervals and do not always take the same amount of time … but they are in the same ballpark. What counts is that they do not vary widely. They are close enough that working with averages is sufficient for our needs.
+
 ![Figure 15](https://cloud.githubusercontent.com/assets/7895210/8338060/4c08d846-1a63-11e5-98d1-920169c95fa5.jpg)
 <p><i><b>Figure 15 GC measurement: average measurement</b></i></p>
 
@@ -438,10 +438,11 @@ The project uses the following tools for development.  The rest of this develope
 * Java JDK 1.8.0_x
 * Apache Maven 3.3.3 or later
 * IntelliJ Idea 14 (optional)
+* Other Java IDEs (forthcoming)
 
 ##Building
 
-EchoX3 builds using Maven from the root of the project.  This is the directory containing the root POM.MXL file for the project.  
+EchoX3 builds using Maven from the root of the project.  This is the directory containing the root POM.MXL file for the project.
 
 The root POM.XML file  should contain the following identifiers:
 ```
@@ -474,7 +475,10 @@ Tests will be automatically run by Maven when building.  Tests may be disabled f
 
 ##IDE Support
 
-###IntelliJ Idea
+###IntelliJ Idea 14
+
+IntelliJ project files are supplied in the /idea directory.  There is a file for the EchoX3 project, and a file per module
+
 ###Eclipse
 
 ##Examples

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactManager">
+    <artifact type="war" name="EchoX3Web:war">
+      <output-path>$output.root$/EchoX3-Web</output-path>
+      <root id="archive" name="EchoX3-Web-0.1.0.war">
+        <element id="artifact" artifact-name="EchoX3Web:war exploded" />
+      </root>
+    </artifact>
+    <artifact type="exploded-war" name="EchoX3Web:war exploded">
+      <output-path>$output.root$/EchoX3-Web/EchoX3-Web-0.1.0</output-path>
+      <root id="root">
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="EchoX3Web" />
+          </element>
+          <element id="directory" name="lib">
+            <element id="archive" name="EchoX3-Client-0.1.0.jar">
+              <element id="module-output" name="EchoX3-Client" />
+            </element>
+            <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-web:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-core:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+            <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.1.7.RELEASE" />
+            <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+            <element id="library" level="project" name="Maven: com.jayway.jsonpath:json-path:0.9.1" />
+            <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.5" />
+            <element id="library" level="project" name="Maven: net.minidev:json-smart:1.2" />
+            <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+            <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
+          </element>
+        </element>
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$output.root$/EchoX3-Web/EchoX3-Web-0.1.0/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="javaee-facet-resources" facet="EchoX3Web/web/Web" />
+      </root>
+    </artifact>
+  </component>
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Annotation profile for EchoX3Web" enabled="true">
+        <sourceOutputDir name="../../../../../../../../../build/1967/EchoX3-Web/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../../../../../../../build/1967/EchoX3-Web/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="EchoX3Web" />
+      </profile>
+      <profile default="false" name="Annotation profile for EchoX3-Sample-SmartCache" enabled="true">
+        <sourceOutputDir name="../../../../../../../../../../build/1967/EchoX3-Sample-SmartCache/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../../../../../../../../build/1967/EchoX3-Sample-SmartCache/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="EchoX3-Sample-SmartCache" />
+      </profile>
+      <profile default="false" name="Annotation profile for EchoX3-container" enabled="true">
+        <sourceOutputDir name="../../../../../../../../../build/1967/EchoX3-container/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../../../../../../../build/1967/EchoX3-container/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="EchoX3-container" />
+      </profile>
+      <profile default="false" name="Annotation profile for EchoX3-ServerWorker" enabled="true">
+        <sourceOutputDir name="../../../../../../../../../build/1967/EchoX3-ServerWorker/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../../../../../../../build/1967/EchoX3-ServerWorker/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="EchoX3-ServerWorker" />
+      </profile>
+      <profile default="false" name="Annotation profile for EchoX3-Client" enabled="true">
+        <sourceOutputDir name="..\..\..\..\..\..\..\1953\EchoX3-Client\generated-sources\annotations" />
+        <sourceTestOutputDir name="..\..\..\..\..\..\..\1953\EchoX3-Client\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="EchoX3-Client" />
+      </profile>
+      <profile default="false" name="Annotation profile for EchoX3-Sample-Hello" enabled="true">
+        <sourceOutputDir name="..\..\..\..\..\..\..\..\1953\EchoX3-Sample-Hello\generated-sources\annotations" />
+        <sourceTestOutputDir name="..\..\..\..\..\..\..\..\1953\EchoX3-Sample-Hello\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="EchoX3-Sample-Hello" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="EchoX3" target="1.8" />
+      <module name="EchoX3-Client" target="1.8" />
+      <module name="EchoX3-container" target="1.8" />
+      <module name="EchoX3-Sample" target="1.8" />
+      <module name="EchoX3-Sample-Hello" target="1.8" />
+      <module name="EchoX3-Sample-SmartCache" target="1.8" />
+      <module name="EchoX3-ServerWorker" target="1.8" />
+      <module name="EchoX3Web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="CopyrightManager" default="" />
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/.." charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../EchoX3Client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../sample" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../sample/hello" charset="UTF-8" />
+  </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/../EchoX3Web" />
+  </component>
+  <component name="IdProvider" IDEtalkID="8C1594399B37D4401957120289B81BC5" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../pom.xml" />
+        <option value="$PROJECT_DIR$/../EchoX3Web/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EchoX3.iml" filepath="$PROJECT_DIR$/EchoX3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EchoX3-Client.iml" filepath="$PROJECT_DIR$/EchoX3-Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sample/EchoX3-Sample.iml" filepath="$PROJECT_DIR$/../sample/EchoX3-Sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sample/hello/EchoX3-Sample-Hello.iml" filepath="$PROJECT_DIR$/../sample/hello/EchoX3-Sample-Hello.iml" />
+    </modules>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Perforce" />
+  </component>
+  <component name="libraryTable">
+    <library name="Maven: javax.servlet:javax.servlet-api:3.1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar!/" />
+        <root url="file:///build/source/eclipse/cache/apache-tomcat-8.0.15-src/java" />
+      </SOURCES>
+    </library>
+    <library name="Maven: junit:junit:4.12">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: log4j:log4j:1.2.17">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.hamcrest:hamcrest-core:1.3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+  </component>
+</project>
