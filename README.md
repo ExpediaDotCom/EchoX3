@@ -534,8 +534,6 @@ This example assumes the OUTPUT_ROOT environment variable has been set, and the 
 java -classpath EchoX3-Client\EchoX3-Client-0.1.0.jar;EchoX3-Sample-HelloEchoX3-Sample-Hello-0.1.0.jar;log4j\log4j\1.2.17\log4j-1.2.17.jar com.expedia.echox3.container.simple.HelloSimple
 ```
 
-Shell scrips will be provided in the /EchoX3/bin directory for windows and bash shells.  
-
 ### Running exampoles from IntelliJ Idea
 
 Assuming the project has been successfully loaded into IntellIJ Idea and builds successfully, the examples will run from within the IDE.
