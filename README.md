@@ -438,7 +438,6 @@ The project uses the following tools for development.  The rest of this develope
 * Java JDK 1.8.0_x
 * Apache Maven 3.3.3 or later
 * IntelliJ Idea 14 (optional)
-* Other Java IDEs (forthcoming)
 
 ##Building
 
@@ -450,6 +449,21 @@ The root POM.XML file  should contain the following identifiers:
 <groupId>com.expedia.echox3</groupId>
 <artifactId>EchoX3</artifactId>
 ```
+
+Optional: Set OUTPUT_ROOT environment variable
+
+It is highly recommended to set the OUTPUT_ROOT environment variable to control your build output location.  This will be helpful when cleaning the project, and managing the project and build output from IntelliJ Idea if you're using that IDE.  
+
+For example (bash shell)
+```
+export OUTPUT_ROOT=/build
+```
+
+For example (windows)
+```
+set OUTPUT_ROOT=d:\build
+```
+
 
 Compile source files and run tests
 
@@ -477,8 +491,63 @@ Tests will be automatically run by Maven when building.  Tests may be disabled f
 
 ###IntelliJ Idea 14
 
-IntelliJ project files are supplied in the /idea directory.  There is a file for the EchoX3 project, and a file per module
+IntelliJ project files are supplied in the /idea directory.  There is a file for the EchoX3 project, and a file per module.
+
+Begin by importing the project into IntelliJ Idea.  
+
+1. Select File->Open from the IntelliJ Idea menu.
+2. Navigate to /EchoX3/idea/
+3. Select EchoX3.ipr and click OK
+
+Set project output root
+
+1. Navigate to File->Settings from the IntelliJ Idea menu.
+2. Type "path variables" in the settings search bar, or naviage to "Build, Execution, Deployment->Path Variables"
+3. Change the value for "output.root".  Ideally this should match your OUTPUT_ROOT environment variable (see Maven build instructions above).
+
+Set project SDK
+
+The project SDK must be set before the project will build.  This may happen automatically depending on the configuration of your IDE.  A warning will be issued if the SDK is not set.
+
+1.  Navigate to "File->Project Structure" from the IntelliJ Idea menu
+2.  Specify SDK for the project. This must be JDK 1.8.0_x or later compatible versions
+3.  Specify project language level.  This must be "8 - Lambdas, type annotations, etc." or later 
+
+Verify build
+
+Select "Build->Rebuild Project" from the IntelliJ Idea menu.  The "Messages" tab should display no errors if the project builds successfully.
 
 ###Eclipse
 
+The project should be usable with Eclipse.  Most if not all of the instructions given for IntelliJ Idea will work with Eclipse but must be translated into Eclipse terms.  Eclipse project files are not included.
+
 ##Examples
+
+Examples may be run from the command-line, or from IntelliJ Idea
+
+### Running examples from the command line
+
+Given availability of EchoX3 .jar files either built from the command-line or provided in binary form, examples may be run from the commmand line.  
+
+This example assumes the OUTPUT_ROOT environment variable has been set, and the command-line is run from its path.
+```
+java -classpath EchoX3-Client\EchoX3-Client-0.1.0.jar;EchoX3-Sample-HelloEchoX3-Sample-Hello-0.1.0.jar;log4j\log4j\1.2.17\log4j-1.2.17.jar com.expedia.echox3.container.simple.HelloSimple
+```
+
+Shell scrips will be provided in the /EchoX3/bin directory for windows and bash shells.  
+
+### Running exampoles from IntelliJ Idea
+
+Assuming the project has been successfully loaded into IntellIJ Idea and builds successfully, the examples will run from within the IDE.
+
+Run / Debug configuration for example Hello
+
+Main Class: com.expedia.echox3.container.simple.HelloSimple
+Working Directory: /EchoX34/idea
+Use classpath of module: EchoX3-Sample-Hello
+
+There will be many lines of log output.  A successful run will end with:
+```
+Success -> Retrieved The quick brown fox jumps over the lazy dog.
+```
+
