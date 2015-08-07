@@ -463,10 +463,12 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.x-y, mixed mode)
 
 ###Maven
 
+Command-line
 ```
 $ mvn --version
 ```
 
+Expected result
 ```
 Apache Maven 3.3.3 (7994120775791599e205a5524ec3e0dfe41d4a06; 2015-04-22T04:57:37-07:00)
 Maven home: <path-to-maven>
