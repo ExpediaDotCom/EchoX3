@@ -563,6 +563,7 @@ The project should be usable with Eclipse.  Most if not all of the instructions 
 ##Examples
 
 Examples may be run from the command-line, or from IntelliJ Idea.  There are three examples.  The following table describes each of them.
+
 | Name        | Description                                           | Main Class                                      |
 | ----------- | ----------------------------------------------------- | ----------------------------------------------- |
 | HelloSimple | "Dumb" cache of key / value pairs                     | com.expedia.echox3.container.simple.HelloSimple |
