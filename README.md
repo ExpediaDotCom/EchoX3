@@ -585,8 +585,8 @@ Assuming the project has been successfully loaded into IntellIJ Idea and builds 
 
 Run / Debug configuration for example Hello (change the main class for the other examples from the description table).
 
-Main Class: com.expedia.echox3.container.simple.HelloSimple
-Working Directory: /EchoX34/idea
-Use classpath of module: EchoX3-Sample-Hello
-
-
+```
+   Main Class:                 com.expedia.echox3.container.simple.HelloSimple
+   Working Directory:          EchoX3/idea
+   Use classpath of module:    EchoX3-Sample-Hello
+```
