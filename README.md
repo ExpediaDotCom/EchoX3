@@ -431,7 +431,7 @@ For programmers who want to expose this information in their application.
 
 # Development Guide
 
-This section is for developers intending to contribute to the project.  It covers the mechanics of working with the project such as building, running tests, and running samples.  It doesn't cover best coding practices, style, design philosophy, etc.
+This section is for developers intending to to consume or contribute to the project.  It covers the mechanics of working with the project such as building, running tests, and running samples.  It doesn't cover best coding practices, style, design philosophy, etc.
 
 ##Build Tools
 
@@ -516,7 +516,7 @@ mvn package
 
 Build-Time Tests
 
-Tests will be automatically run by Maven when building.  Tests may be disabled for convenience by commenting out the appropriate line in the root POM.XML (or disabled on a per-project basis by adding a similar line to any sub-project's POM.XML).
+Tests will be automatically run by Maven when building.  Tests may be disabled for convenience by commenting out the appropriate line in the root POM.XML as shown below (or disabled on a per-project basis by adding a similar line to any sub-project's POM.XML).
 
 ```
 <properties>
@@ -528,7 +528,7 @@ Tests will be automatically run by Maven when building.  Tests may be disabled f
 
 ###IntelliJ Idea 14
 
-IntelliJ project files are supplied in the /idea directory.  There is a file for the EchoX3 project, and a file per module.
+IntelliJ project files are supplied in the /idea directory.  There are two files for the EchoX3 project (EchoX3.ipr, EchoX3.iml), and a <module-name>.iml file per module.
 
 Begin by importing the project into IntelliJ Idea.  
 
