@@ -587,6 +587,6 @@ Run / Debug configuration for example Hello (change the main class for the other
 
 ```
    Main Class:                 com.expedia.echox3.container.simple.HelloSimple
-   Working Directory:          EchoX3/idea
+   Working Directory:          ~/src/EchoX3/idea
    Use classpath of module:    EchoX3-Sample-Hello
 ```
