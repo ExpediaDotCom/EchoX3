@@ -433,11 +433,48 @@ For programmers who want to expose this information in their application.
 
 This section is for developers intending to contribute to the project.  It covers the mechanics of working with the project such as building, running tests, and running samples.  It doesn't cover best coding practices, style, design philosophy, etc.
 
-The project uses the following tools for development.  The rest of this developer guide will assume these tools are installed in the development environment.
+##Build Tools
+
+The project uses the following tools for development.  The rest of this developer guide will assume these tools are installed in the development environment, and that the correct versions can be invoked from the command-line.  
+
+Please see the developer's documentation for each tool for installation steps for your platform.
 
 * Java JDK 1.8.0_x
 * Apache Maven 3.3.3 or later
 * IntelliJ Idea 14 (optional)
+
+##Verifying your Build Environment
+
+If the required tools are installed correctly, the following command-lines should result in the outputs shown.  Note that prompts shown are for bash shell users, but the instructions are the same for other platforms.
+
+###Java
+
+Command-line
+```
+$ java -version
+```
+
+Expected result
+```
+java version "1.8.0_x"
+Java(TM) SE Runtime Environment (build 1.8.0_x-y)
+Java HotSpot(TM) 64-Bit Server VM (build 25.x-y, mixed mode)
+```
+
+###Maven
+
+```
+$ mvn --version
+```
+
+```
+Apache Maven 3.3.3 (7994120775791599e205a5524ec3e0dfe41d4a06; 2015-04-22T04:57:37-07:00)
+Maven home: <path-to-maven>
+Java version: 1.8.0_20, vendor: Oracle Corporation
+Java home: <path-to-jdk>
+Default locale: <locale info>
+OS name: <os name>, version: <version>, arch: <arch name>, family: <family name>
+```
 
 ##Building
 
