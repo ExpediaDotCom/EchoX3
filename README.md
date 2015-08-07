@@ -562,18 +562,26 @@ The project should be usable with Eclipse.  Most if not all of the instructions 
 
 ##Examples
 
-Examples may be run from the command-line, or from IntelliJ Idea
+Examples may be run from the command-line, or from IntelliJ Idea.  There are three examples: HelloSimple, 
 
 ### Running examples from the command line
 
-Given availability of EchoX3 .jar files either built from the command-line or provided in binary form, examples may be run from the commmand line.  
+Given availability of EchoX3 .jar files either built from the command-line or provided in binary form, examples may be run from the commmand line.  There are three examples, all built into EchoX3-Sample-Hello-x.x.x.jar.
 
-This example assumes the OUTPUT_ROOT environment variable has been set, and the command-line is run from its path.
+The following table describes each example.
+
+| Name        | Description                                           | Main Class                                      |
+| ----------- | ----------------------------------------------------- | ----------------------------------------------- |
+| HelloSimple | "Dumb" cache of key / value pairs                     | com.expedia.echox3.container.simple.HelloSimple |
+| HelloIoc    | API intended for use by Ioc frameworks such as Spring | com.expedia.echox3.container.ioc.HelloIoc       |
+| HelloObject | Distributed "smart" Object Cache                      | com.expedia.echox3.container.object.HelloObject |
+
+This assumes the OUTPUT_ROOT environment variable has been set, and the command-line is run from its path.
 ```
-java -classpath EchoX3-Client\EchoX3-Client-0.1.0.jar;EchoX3-Sample-HelloEchoX3-Sample-Hello-0.1.0.jar;log4j\log4j\1.2.17\log4j-1.2.17.jar com.expedia.echox3.container.simple.HelloSimple
+/build> java -classpath EchoX3-Client\EchoX3-Client-0.1.0.jar;EchoX3-Sample-HelloEchoX3-Sample-Hello-0.1.0.jar;log4j\log4j\1.2.17\log4j-1.2.17.jar com.expedia.echox3.container.simple.HelloSimple
 ```
 
-### Running exampoles from IntelliJ Idea
+### Running examples from IntelliJ Idea
 
 Assuming the project has been successfully loaded into IntellIJ Idea and builds successfully, the examples will run from within the IDE.
 
@@ -583,8 +591,4 @@ Main Class: com.expedia.echox3.container.simple.HelloSimple
 Working Directory: /EchoX34/idea
 Use classpath of module: EchoX3-Sample-Hello
 
-There will be many lines of log output.  A successful run will end with:
-```
-Success -> Retrieved The quick brown fox jumps over the lazy dog.
-```
 
