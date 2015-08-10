@@ -503,6 +503,11 @@ For example (windows)
 set OUTPUT_ROOT=d:\build
 ```
 
+On Macs or unix based platforms, you may need to create your /build directory, or use the sudo command to build so that these directories may be created.
+
+```
+sudo mvn package
+```
 
 Compile source files and run tests
 
