@@ -575,15 +575,6 @@ Examples may be run from the command-line, or from IntelliJ Idea.  There are thr
 | HelloIoc    | API intended for use by Ioc frameworks such as Spring | com.expedia.echox3.container.ioc.HelloIoc       |
 | HelloObject | Distributed "smart" Object Cache                      | com.expedia.echox3.container.object.HelloObject |
 
-### Running examples from the command line
-
-Given availability of EchoX3 .jar files either built from the command-line or provided in binary form, examples may be run from the commmand line.  Change the main class for the other examples from the description table.
-
-This assumes the OUTPUT_ROOT environment variable has been set, and the command-line is run from its path.
-```
-/build> java -classpath EchoX3-Client/EchoX3-Client-0.1.0.jar;EchoX3-Sample-Hello/EchoX3-Sample-Hello-0.1.0.jar;log4j/log4j/1.2.17/log4j-1.2.17.jar com.expedia.echox3.container.simple.HelloSimple
-```
-
 ### Running examples from IntelliJ Idea
 
 Assuming the project has been successfully loaded into IntellIJ Idea and builds successfully, the examples will run from within the IDE.
