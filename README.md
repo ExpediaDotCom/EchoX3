@@ -545,9 +545,9 @@ Begin by importing the project into IntelliJ Idea.
 
 Set project output root
 
-1. Navigate to File->Settings from the IntelliJ Idea menu.
-2. Type "path variables" in the settings search bar, or naviage to "Build, Execution, Deployment->Path Variables"
-3. Change the value for "output.root".  Ideally this should match your OUTPUT_ROOT environment variable (see Maven build instructions above).
+1. From the IntelliJ Idea menu, on Windows, navigate to File->Settings; on Mac, navigate to "IntelliJ IDEA"->Preferences. 
+3. Type "path variables" in the settings search bar, or naviage to "Build, Execution, Deployment->Path Variables".
+4. Change the value for "output.root".  Ideally this should match your OUTPUT_ROOT environment variable (see Maven build instructions above).
 
 Set project SDK
 
