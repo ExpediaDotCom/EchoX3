@@ -12,7 +12,7 @@ import com.expedia.echox3.visible.ioc.IocSimpleCacheClient;
 import com.expedia.echox3.visible.trellis.IClientFactory.ClientType;
 
 @SuppressWarnings("PMD.SystemPrintln")
-public class HelloIocTrellis
+public class HelloIoc
 {
 	private static final String			CACHE_NAME_1		= "HelloIocTrellis1";
 	private static final String			CACHE_NAME_2		= "HelloIocTrellis2";
@@ -25,10 +25,10 @@ public class HelloIocTrellis
 	@SuppressWarnings("PMD.usePrintln")
 	public static void main(String[] args) throws BasicException
 	{
-		URL								url				= ClassLoader.getSystemResource(FILE_NAME);
-		IocSimpleCacheClient client1			= new IocSimpleCacheClient(
-																		ClientType.Local, CACHE_NAME_1, url);
-		IocSimpleCacheClient client2		= new IocSimpleCacheClient();
+		URL						url			= ClassLoader.getSystemResource(FILE_NAME);
+		IocSimpleCacheClient	client1		= new IocSimpleCacheClient(ClientType.Local, CACHE_NAME_1, url);
+		IocSimpleCacheClient	client2		= new IocSimpleCacheClient();
+
 		client2.setClientType(ClientType.Local);
 		client2.setCacheName(CACHE_NAME_2);
 		client2.setConfigurationUrl(url.toString());
