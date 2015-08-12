@@ -505,30 +505,30 @@ It is highly recommended to set the OUTPUT_ROOT environment variable to control 
 
 For example (bash shell)
 ```
-export OUTPUT_ROOT=/build
+$ export OUTPUT_ROOT=/build
 ```
 
 For example (windows)
 ```
-set OUTPUT_ROOT=d:\build
+c:> set OUTPUT_ROOT=d:\build
 ```
 
 Compile source files and run tests
 
 ```
-mvn compile
+$ mvn compile
 ```
 
 Create build artifacts (jars and other output artifacts)
 
 ```
-mvn package
+$ mvn package
 ```
 
 On Macs or unix based platforms, you may need to create your /build directory, or use the sudo command to build so that these directories may be created.
 
 ```
-sudo mvn package
+$ sudo mvn package
 ```
 
 ##IDE Support
@@ -600,7 +600,7 @@ Error if executable attribute not set
 
 To set the executable attribute: From the bin directory under project root e.g. /usr/src/EchoX3/bin
 ```
-chmod +x *.bash
+$ chmod +x *.bash
 ```
 
 Again these commands must be executed from the bin directory under your project root e.g. /usr/src/EchoX3/bin or d:\src\EchoX3\bin
