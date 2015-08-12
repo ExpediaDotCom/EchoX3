@@ -598,7 +598,7 @@ Error if executable attribute not set
 ./HelloObject.bash: Permission Denied
 ```
 
-From the bin directory under project root e.g. /usr/src/EchoX3/bin
+To set the executable attribute: From the bin directory under project root e.g. /usr/src/EchoX3/bin
 ```
 chmod +x *.bash
 ```
