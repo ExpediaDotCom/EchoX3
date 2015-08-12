@@ -431,7 +431,7 @@ For programmers who want to expose this information in their application.
 
 # Development Guide
 
-This section is for developers intending to to consume or contribute to the project.  It covers the mechanics of working with the project such as building, running tests, and running samples.  It doesn't cover best coding practices, style, design philosophy, etc.
+This section is for developers intending to consume or contribute to the project.  It covers the mechanics of working with the project such as building, running tests, and running samples.  It doesn't cover best coding practices, style, design philosophy, etc.
 
 ##Build Tools
 
@@ -480,13 +480,23 @@ OS name: <os name>, version: <version>, arch: <arch name>, family: <family name>
 
 ##Building
 
-EchoX3 builds using Maven from the root of the project.  This is the directory containing the root POM.MXL file for the project.
+EchoX3 builds using Maven from the root of the project.  This is the directory containing the root POM.XML file for the project.
 
 The root POM.XML file  should contain the following identifiers:
 ```
 <name>EchoX3</name>
 <groupId>com.expedia.echox3</groupId>
 <artifactId>EchoX3</artifactId>
+```
+
+Build-Time Tests
+
+Tests will be automatically run by Maven when building.  Tests may be disabled for convenience by commenting out the appropriate line in the root POM.XML as shown below (or disabled on a per-project basis by adding a similar line to any sub-project's POM.XML).
+
+```
+<properties>
+  <!-- Uncomment this line to skip tests when building -->
+  <maven.test.skip>true</maven.test.skip>
 ```
 
 Optional: Set OUTPUT_ROOT environment variable
@@ -503,12 +513,6 @@ For example (windows)
 set OUTPUT_ROOT=d:\build
 ```
 
-On Macs or unix based platforms, you may need to create your /build directory, or use the sudo command to build so that these directories may be created.
-
-```
-sudo mvn package
-```
-
 Compile source files and run tests
 
 ```
@@ -521,14 +525,10 @@ Create build artifacts (jars and other output artifacts)
 mvn package
 ```
 
-Build-Time Tests
-
-Tests will be automatically run by Maven when building.  Tests may be disabled for convenience by commenting out the appropriate line in the root POM.XML as shown below (or disabled on a per-project basis by adding a similar line to any sub-project's POM.XML).
+On Macs or unix based platforms, you may need to create your /build directory, or use the sudo command to build so that these directories may be created.
 
 ```
-<properties>
-  <!-- Uncomment this line to skip tests when building -->
-  <maven.test.skip>true</maven.test.skip>
+sudo mvn package
 ```
 
 ##IDE Support
