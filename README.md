@@ -591,7 +591,19 @@ Run / Debug configuration for example Hello (change the main class for the other
 
 Shell scripts are provided along with pre-built java jars for the EchoX3 client and examples.  These files are provided in the bin subdirectory of the project.  Shell scripts expect to be run from this directory.
 
-Warning: Make certain your current working directory is the bin directory under the project root.  
+Note: On Mac and 'Nix variants, the executable file attribute must be set for shell scripts.  If this attribute is not set, attempting to execute the shell scripts will result in an error.
+
+Error if executable attribute not set
+```
+./HelloObject.bash: Permission Denied
+```
+
+From the bin directory under project root e.g. /usr/src/EchoX3/bin
+```
+chmod +x *.bash
+```
+
+Again these commands must be executed from the bin directory under your project root e.g. /usr/src/EchoX3/bin or d:\src\EchoX3\bin
 
 Mac / 'Nix variants
 ```
