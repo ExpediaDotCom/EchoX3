@@ -586,3 +586,36 @@ Run / Debug configuration for example Hello (change the main class for the other
    Working Directory:          ~/src/EchoX3/idea
    Use classpath of module:    EchoX3-Sample-Hello
 ```
+
+### Running examples from the command line
+
+Shell scripts are provided along with pre-built java jars for the EchoX3 client and examples.  These files are provided in the bin subdirectory of the project.  Shell scripts expect to be run from this directory.
+
+Warning: Make certain your current working directory is the bin directory under the project root.  
+
+Mac / 'Nix variants
+```
+$ ./HelloSimple.bash
+$ ./HelloObject.bash
+$ ./HelloIoc.bash
+```
+
+Windows
+```
+C:\src\github\EchoX3\bin>HelloSimple.cmd
+C:\src\github\EchoX3\bin>HelloObject.cmd
+C:\src\github\EchoX3\bin>HelloIoc.cmd
+```
+
+Successful output should be similar to the following example shown, with no exceptions thrown.
+
+```
+2015-08-12 16:43:26,447  INFO [main] AbstractConfigurationProvider (40175, ConfigurationChange) Configuration provider jar:file:/D:/src/buildverify/EchoX3/bin/EchoX3-Client-0.1.0.jar!/config/BasicsCounters.config.properties modified:
+Added Serial.DeflateIsEnabled = null -> false
+Added Serial.DeserializeIsEnabled = null -> false
+Added Serial.InflateIsEnabled = null -> false
+...
+       (lots of lines removed)
+...
+Success -> Retrieved The quick brown fox jumps over the lazy dog.
+```
